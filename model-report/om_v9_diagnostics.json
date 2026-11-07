@@ -1,0 +1,241 @@
+{
+  "n_train": 139931,
+  "n_valid": 10069,
+  "n_test": 3974,
+  "test_listed_min": "2025-08-01",
+  "test_listed_max": "2026-09-28",
+  "has_list_price_on_test": false,
+  "n_community": 145,
+  "n_style": 16,
+  "n_municipality": 5,
+  "dev": {
+    "MdAPE": 7.53,
+    "MAPE": 9.77,
+    "median_signed_error": -2.1,
+    "p90_APE": 20.52,
+    "p95_APE": 26.46
+  },
+  "anchor": {
+    "MdAPE": 15.6,
+    "MAPE": 20.8,
+    "median_signed_error": 3.71,
+    "p90_APE": 43.35,
+    "p95_APE": 56.57
+  },
+  "community_share_valid": 0.7647,
+  "building_cover_valid": 0.5976,
+  "shift_percent": 1.58,
+  "adf_p": 0.0325,
+  "kpss_p": null,
+  "kpss_stat": 0.093,
+  "kpss_10": 0.119,
+  "seasonal_strength": 0.8,
+  "seasonal_swing": 144375.0,
+  "gain": {
+    "lot_missing": 33.25,
+    "building_log_price": 17.82,
+    "log_square_feet": 12.92,
+    "community": 12.4,
+    "log_lot_front": 8.31,
+    "washrooms": 5.28,
+    "lot_depth": 3.03,
+    "log_community_psf": 1.96,
+    "remarks_score": 0.68,
+    "house_type_name": 0.6,
+    "as_is": 0.49,
+    "latitude": 0.39,
+    "parking_total": 0.39,
+    "longitude": 0.37,
+    "log_city_psf_3": 0.33,
+    "listed_month_sin": 0.3,
+    "log_city_psf_12": 0.27,
+    "turnkey": 0.22,
+    "building_sales": 0.15,
+    "redone": 0.14,
+    "potential": 0.12,
+    "original": 0.11,
+    "garage": 0.1,
+    "listed_month_cos": 0.08,
+    "house_style": 0.08,
+    "stunning": 0.05,
+    "bedrooms": 0.04,
+    "investor": 0.03,
+    "renovated": 0.02,
+    "worn": 0.02,
+    "dated": 0.01,
+    "finished": 0.01,
+    "motivated": 0.0,
+    "municipality": 0.0,
+    "needs_work": 0.0
+  },
+  "deciles": [
+    {
+      "decile": "D1",
+      "n": 1007,
+      "sold_min": 226200.0,
+      "sold_max": 440400.0,
+      "MdAPE": 5.4,
+      "MAPE": 7.48,
+      "signed": 2.53
+    },
+    {
+      "decile": "D2",
+      "n": 1008,
+      "sold_min": 440500.0,
+      "sold_max": 521000.0,
+      "MdAPE": 5.33,
+      "MAPE": 6.55,
+      "signed": -0.5
+    },
+    {
+      "decile": "D3",
+      "n": 1006,
+      "sold_min": 521100.0,
+      "sold_max": 597000.0,
+      "MdAPE": 6.07,
+      "MAPE": 7.79,
+      "signed": -0.78
+    },
+    {
+      "decile": "D4",
+      "n": 1007,
+      "sold_min": 597100.0,
+      "sold_max": 692000.0,
+      "MdAPE": 6.36,
+      "MAPE": 8.1,
+      "signed": -1.31
+    },
+    {
+      "decile": "D5",
+      "n": 1009,
+      "sold_min": 692100.0,
+      "sold_max": 805300.0,
+      "MdAPE": 7.19,
+      "MAPE": 8.88,
+      "signed": -0.08
+    },
+    {
+      "decile": "D6",
+      "n": 1004,
+      "sold_min": 805400.0,
+      "sold_max": 939200.0,
+      "MdAPE": 7.71,
+      "MAPE": 9.46,
+      "signed": -1.63
+    },
+    {
+      "decile": "D7",
+      "n": 1007,
+      "sold_min": 939300.0,
+      "sold_max": 1101000.0,
+      "MdAPE": 7.84,
+      "MAPE": 9.4,
+      "signed": -2.76
+    },
+    {
+      "decile": "D8",
+      "n": 1007,
+      "sold_min": 1101100.0,
+      "sold_max": 1316300.0,
+      "MdAPE": 9.88,
+      "MAPE": 11.39,
+      "signed": -5.63
+    },
+    {
+      "decile": "D9",
+      "n": 1007,
+      "sold_min": 1316800.0,
+      "sold_max": 1761200.0,
+      "MdAPE": 10.47,
+      "MAPE": 12.59,
+      "signed": -6.71
+    },
+    {
+      "decile": "D10",
+      "n": 1007,
+      "sold_min": 1761400.0,
+      "sold_max": 17035700.0,
+      "MdAPE": 13.58,
+      "MAPE": 16.04,
+      "signed": -10.68
+    }
+  ],
+  "types": [
+    {
+      "house_type_name": "Condo Apt",
+      "n": 4843,
+      "MdAPE": 6.24,
+      "MAPE": 8.09,
+      "signed": -1.54
+    },
+    {
+      "house_type_name": "Detached",
+      "n": 3123,
+      "MdAPE": 9.6,
+      "MAPE": 11.98,
+      "signed": -2.33
+    },
+    {
+      "house_type_name": "Semi-Detached",
+      "n": 1034,
+      "MdAPE": 9.84,
+      "MAPE": 11.51,
+      "signed": -4.34
+    },
+    {
+      "house_type_name": "Condo Townhouse",
+      "n": 616,
+      "MdAPE": 5.98,
+      "MAPE": 7.54,
+      "signed": -1.42
+    },
+    {
+      "house_type_name": "Freehold Townhouse",
+      "n": 405,
+      "MdAPE": 9.19,
+      "MAPE": 10.97,
+      "signed": -5.14
+    },
+    {
+      "house_type_name": "Co-Op Apt",
+      "n": 48,
+      "MdAPE": 10.67,
+      "MAPE": 16.75,
+      "signed": -1.47
+    }
+  ],
+  "municipalities": [
+    {
+      "municipality": "Toronto",
+      "n": 5746,
+      "MdAPE": 7.68,
+      "signed": -1.95
+    },
+    {
+      "municipality": "North York",
+      "n": 1798,
+      "MdAPE": 7.57,
+      "signed": -2.43
+    },
+    {
+      "municipality": "Scarborough",
+      "n": 1430,
+      "MdAPE": 7.3,
+      "signed": -2.43
+    },
+    {
+      "municipality": "Etobicoke",
+      "n": 971,
+      "MdAPE": 7.22,
+      "signed": -1.83
+    },
+    {
+      "municipality": "York",
+      "n": 124,
+      "MdAPE": 6.32,
+      "signed": -1.8
+    }
+  ],
+  "lot_missing_train": 0.5818,
+  "lot_missing_test": 0.5408
+}

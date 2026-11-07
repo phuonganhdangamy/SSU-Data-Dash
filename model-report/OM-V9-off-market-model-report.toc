@@ -1,0 +1,51 @@
+\contentsline {section}{\numberline {1}Purpose and intended use}{4}{section.1}%
+\contentsline {subsection}{\numberline {1.1}The decision}{4}{subsection.1.1}%
+\contentsline {subsection}{\numberline {1.2}What the model returns}{4}{subsection.1.2}%
+\contentsline {subsection}{\numberline {1.3}Users and non-uses}{4}{subsection.1.3}%
+\contentsline {subsection}{\numberline {1.4}Performance claim, stated once}{4}{subsection.1.4}%
+\contentsline {section}{\numberline {2}Conceptual soundness}{5}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Economic object}{5}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}Why log price, and why not only a gap around the anchor}{5}{subsection.2.2}%
+\contentsline {subsection}{\numberline {2.3}Why a separate level correction}{5}{subsection.2.3}%
+\contentsline {subsection}{\numberline {2.4}Why the evidence has to be out of time}{6}{subsection.2.4}%
+\contentsline {section}{\numberline {3}Data}{6}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Source and population}{6}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}Estimation sample and the inner slice}{6}{subsection.3.2}%
+\contentsline {subsection}{\numberline {3.3}Book composition}{6}{subsection.3.3}%
+\contentsline {subsection}{\numberline {3.4}Fields the model is allowed to see}{7}{subsection.3.4}%
+\contentsline {section}{\numberline {4}Data preparation}{7}{section.4}%
+\contentsline {subsection}{\numberline {4.1}The order we run}{7}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}Floor area}{8}{subsection.4.2}%
+\contentsline {subsection}{\numberline {4.3}Lot, counts, and the building pin}{8}{subsection.4.3}%
+\contentsline {subsection}{\numberline {4.4}Why each raw field was transformed}{9}{subsection.4.4}%
+\contentsline {subsection}{\numberline {4.5}The listing month}{9}{subsection.4.5}%
+\contentsline {subsection}{\numberline {4.6}Fields we looked at and left out}{9}{subsection.4.6}%
+\contentsline {section}{\numberline {5}Market facts that drive the specification}{10}{section.5}%
+\contentsline {section}{\numberline {6}Feature specification}{10}{section.6}%
+\contentsline {subsection}{\numberline {6.1}Community and city price levels}{10}{subsection.6.1}%
+\contentsline {subsection}{\numberline {6.2}Same-pin sales}{11}{subsection.6.2}%
+\contentsline {subsection}{\numberline {6.3}Phrase flags}{12}{subsection.6.3}%
+\contentsline {subsection}{\numberline {6.4}The remarks score}{13}{subsection.6.4}%
+\contentsline {subsection}{\numberline {6.5}The 35 columns, in one place}{13}{subsection.6.5}%
+\contentsline {subsection}{\numberline {6.6}What the splits actually use}{14}{subsection.6.6}%
+\contentsline {subsection}{\numberline {6.7}Decisions that were tested and not kept}{15}{subsection.6.7}%
+\contentsline {section}{\numberline {7}Estimation and calibration}{15}{section.7}%
+\contentsline {subsection}{\numberline {7.1}The fitted equation}{15}{subsection.7.1}%
+\contentsline {subsection}{\numberline {7.2}How we measure the shift on the developmental split}{15}{subsection.7.2}%
+\contentsline {subsection}{\numberline {7.3}Settings we froze}{16}{subsection.7.3}%
+\contentsline {subsection}{\numberline {7.4}How we chose the weight}{16}{subsection.7.4}%
+\contentsline {subsection}{\numberline {7.5}What the calibration plot shows}{17}{subsection.7.5}%
+\contentsline {section}{\numberline {8}Architecture}{18}{section.8}%
+\contentsline {section}{\numberline {9}Developmental evidence}{19}{section.9}%
+\contentsline {section}{\numberline {10}Walk-forward validation}{20}{section.10}%
+\contentsline {subsection}{\numberline {10.1}Definition}{20}{subsection.10.1}%
+\contentsline {subsection}{\numberline {10.2}Results}{20}{subsection.10.2}%
+\contentsline {subsection}{\numberline {10.3}What this comparison decides}{21}{subsection.10.3}%
+\contentsline {subsection}{\numberline {10.4}A stale book}{21}{subsection.10.4}%
+\contentsline {subsection}{\numberline {10.5}Challengers under the same protocol}{22}{subsection.10.5}%
+\contentsline {section}{\numberline {11}Error analysis}{22}{section.11}%
+\contentsline {section}{\numberline {12}Assumptions, limitations, and model risk}{24}{section.12}%
+\contentsline {section}{\numberline {13}Ongoing monitoring}{25}{section.13}%
+\contentsline {section}{\numberline {14}Reproducibility}{25}{section.14}%
+\contentsline {section}{\numberline {A}Full developmental ladder}{26}{appendix.A}%
+\contentsline {section}{\numberline {B}References cited in the text}{26}{appendix.B}%
