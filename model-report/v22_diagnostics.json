@@ -1,0 +1,319 @@
+{
+  "n_listings": 150000,
+  "n_train": 139931,
+  "n_valid": 10069,
+  "n_community": 145,
+  "n_style": 16,
+  "n_municipality": 5,
+  "n_type": 6,
+  "corr_list_sold": 0.986,
+  "median_pct_vs_list": -1.97,
+  "mean_pct_vs_list": 0.23,
+  "std_pct_vs_list": 10.74,
+  "ratio_p10": 0.89,
+  "ratio_p50": 0.98,
+  "ratio_p90": 1.147,
+  "share_below_list": 0.5831,
+  "share_above_list": 0.4164,
+  "ols_r2": 0.966,
+  "ols_list_elasticity": 0.894,
+  "resid_skew": 0.72,
+  "dev_v22": {
+    "MdAPE": 4.43,
+    "MAPE": 5.53,
+    "median_signed_error": 1.49,
+    "p90_APE": 11.64,
+    "p95_APE": 14.37
+  },
+  "dev_list": {
+    "MdAPE": 7.26,
+    "MAPE": 8.09,
+    "median_signed_error": 5.68,
+    "p90_APE": 15.89,
+    "p95_APE": 18.68
+  },
+  "walk_list": {
+    "MdAPE": 7.26,
+    "MAPE": 8.09,
+    "median_signed_error": 5.68,
+    "p90_APE": 15.89,
+    "p95_APE": 18.68
+  },
+  "walk_list_months": [
+    {
+      "month": "2025-12",
+      "n": 1238,
+      "MdAPE": 7.46,
+      "MAPE": 8.23,
+      "median_signed_error": 6.46,
+      "p90_APE": 15.83,
+      "p95_APE": 19.25
+    },
+    {
+      "month": "2026-01",
+      "n": 1058,
+      "MdAPE": 7.58,
+      "MAPE": 8.31,
+      "median_signed_error": 6.6,
+      "p90_APE": 16.05,
+      "p95_APE": 18.36
+    },
+    {
+      "month": "2026-02",
+      "n": 1442,
+      "MdAPE": 7.15,
+      "MAPE": 8.09,
+      "median_signed_error": 5.73,
+      "p90_APE": 15.87,
+      "p95_APE": 18.54
+    },
+    {
+      "month": "2026-03",
+      "n": 1816,
+      "MdAPE": 7.1,
+      "MAPE": 7.93,
+      "median_signed_error": 5.28,
+      "p90_APE": 15.67,
+      "p95_APE": 18.54
+    },
+    {
+      "month": "2026-04",
+      "n": 2224,
+      "MdAPE": 7.24,
+      "MAPE": 8.06,
+      "median_signed_error": 5.48,
+      "p90_APE": 15.83,
+      "p95_APE": 18.65
+    },
+    {
+      "month": "2026-05",
+      "n": 2291,
+      "MdAPE": 7.25,
+      "MAPE": 8.04,
+      "median_signed_error": 5.12,
+      "p90_APE": 16.08,
+      "p95_APE": 18.67
+    }
+  ],
+  "coverage": {
+    "train_peer_community_share": 0.8399,
+    "valid_peer_community_share": 0.9712,
+    "train_discount_community_share": 0.4149,
+    "train_discount_type_share": 0.5525,
+    "train_discount_missing_share": 0.0326,
+    "valid_discount_community_share": 0.1482,
+    "valid_discount_type_share": 0.3934,
+    "valid_discount_missing_share": 0.4584,
+    "valid_community_unseen": 0.0,
+    "list_month_factor_valid_median": -0.0539
+  },
+  "gain": {
+    "peer_ask": 21.64,
+    "community": 18.6,
+    "log_list_price": 9.57,
+    "market_lag": 9.37,
+    "recent_discount": 7.45,
+    "list_month_factor": 6.32,
+    "log_square_feet": 3.23,
+    "latitude": 2.63,
+    "listed_month_cos": 2.58,
+    "listed_month_sin": 2.53,
+    "lot_area": 2.47,
+    "longitude": 2.23,
+    "washrooms": 2.11,
+    "lot_depth": 2.0,
+    "house_type_name": 1.88,
+    "log_lot_front": 1.75,
+    "house_style": 1.71,
+    "parking_total": 0.87,
+    "bedrooms": 0.32,
+    "area_is_range": 0.32,
+    "garage": 0.31,
+    "lot_missing": 0.07,
+    "municipality": 0.05
+  },
+  "forecast_log_residual": {
+    "2025-12-01": -0.0622,
+    "2026-01-01": -0.0603,
+    "2026-02-01": -0.0539,
+    "2026-03-01": -0.0537,
+    "2026-04-01": -0.0509,
+    "2026-05-01": -0.0541
+  },
+  "type_mix_train": {
+    "Condo Apt": 0.511,
+    "Detached": 0.286,
+    "Semi-Detached": 0.095,
+    "Condo Townhouse": 0.068,
+    "Freehold Townhouse": 0.034,
+    "Co-Op Apt": 0.005
+  },
+  "deciles": [
+    {
+      "decile": "D1",
+      "n": 1007,
+      "sold_min": 226200.0,
+      "sold_max": 440400.0,
+      "MdAPE": 4.59,
+      "MAPE": 5.32,
+      "signed": 3.69
+    },
+    {
+      "decile": "D2",
+      "n": 1008,
+      "sold_min": 440500.0,
+      "sold_max": 521000.0,
+      "MdAPE": 3.75,
+      "MAPE": 4.46,
+      "signed": 2.07
+    },
+    {
+      "decile": "D3",
+      "n": 1006,
+      "sold_min": 521100.0,
+      "sold_max": 597000.0,
+      "MdAPE": 3.73,
+      "MAPE": 4.55,
+      "signed": 1.87
+    },
+    {
+      "decile": "D4",
+      "n": 1007,
+      "sold_min": 597100.0,
+      "sold_max": 692000.0,
+      "MdAPE": 3.83,
+      "MAPE": 4.66,
+      "signed": 1.56
+    },
+    {
+      "decile": "D5",
+      "n": 1009,
+      "sold_min": 692100.0,
+      "sold_max": 805300.0,
+      "MdAPE": 4.0,
+      "MAPE": 5.02,
+      "signed": 1.45
+    },
+    {
+      "decile": "D6",
+      "n": 1004,
+      "sold_min": 805400.0,
+      "sold_max": 939200.0,
+      "MdAPE": 4.82,
+      "MAPE": 5.66,
+      "signed": 1.16
+    },
+    {
+      "decile": "D7",
+      "n": 1007,
+      "sold_min": 939300.0,
+      "sold_max": 1101000.0,
+      "MdAPE": 4.72,
+      "MAPE": 6.0,
+      "signed": 1.09
+    },
+    {
+      "decile": "D8",
+      "n": 1007,
+      "sold_min": 1101100.0,
+      "sold_max": 1316300.0,
+      "MdAPE": 4.6,
+      "MAPE": 6.02,
+      "signed": 0.47
+    },
+    {
+      "decile": "D9",
+      "n": 1007,
+      "sold_min": 1316800.0,
+      "sold_max": 1761200.0,
+      "MdAPE": 5.37,
+      "MAPE": 6.59,
+      "signed": -0.28
+    },
+    {
+      "decile": "D10",
+      "n": 1007,
+      "sold_min": 1761400.0,
+      "sold_max": 17035700.0,
+      "MdAPE": 5.57,
+      "MAPE": 6.97,
+      "signed": 0.49
+    }
+  ],
+  "types": [
+    {
+      "house_type_name": "Condo Apt",
+      "n": 4843,
+      "MdAPE": 3.69,
+      "MAPE": 4.36,
+      "signed": 1.65
+    },
+    {
+      "house_type_name": "Detached",
+      "n": 3123,
+      "MdAPE": 5.52,
+      "MAPE": 6.71,
+      "signed": 1.63
+    },
+    {
+      "house_type_name": "Semi-Detached",
+      "n": 1034,
+      "MdAPE": 5.78,
+      "MAPE": 6.91,
+      "signed": -0.01
+    },
+    {
+      "house_type_name": "Condo Townhouse",
+      "n": 616,
+      "MdAPE": 4.43,
+      "MAPE": 5.36,
+      "signed": 1.45
+    },
+    {
+      "house_type_name": "Freehold Townhouse",
+      "n": 405,
+      "MdAPE": 5.58,
+      "MAPE": 6.94,
+      "signed": 0.99
+    },
+    {
+      "house_type_name": "Co-Op Apt",
+      "n": 48,
+      "MdAPE": 5.47,
+      "MAPE": 6.12,
+      "signed": 3.6
+    }
+  ],
+  "municipalities": [
+    {
+      "municipality": "Toronto",
+      "n": 5746,
+      "MdAPE": 4.42,
+      "signed": 1.43
+    },
+    {
+      "municipality": "North York",
+      "n": 1798,
+      "MdAPE": 4.38,
+      "signed": 1.64
+    },
+    {
+      "municipality": "Scarborough",
+      "n": 1430,
+      "MdAPE": 4.62,
+      "signed": 1.41
+    },
+    {
+      "municipality": "Etobicoke",
+      "n": 971,
+      "MdAPE": 4.34,
+      "signed": 1.81
+    },
+    {
+      "municipality": "York",
+      "n": 124,
+      "MdAPE": 4.24,
+      "signed": 1.0
+    }
+  ]
+}
