@@ -49,6 +49,9 @@
 \contentsline {section}{\numberline {12}Assumptions, limitations, and model risk}{22}{section.12}%
 \contentsline {section}{\numberline {13}Ongoing monitoring}{24}{section.13}%
 \contentsline {section}{\numberline {14}Reproducibility}{24}{section.14}%
-\contentsline {section}{\numberline {15}Other Information}{25}{section.15}%
-\contentsline {section}{\numberline {A}Full developmental ladder}{25}{appendix.A}%
-\contentsline {section}{\numberline {B}References cited in the text}{25}{appendix.B}%
+\contentsline {subsection}{\numberline {14.1}Where the submission lives}{25}{subsection.14.1}%
+\contentsline {subsection}{\numberline {14.2}What we run}{25}{subsection.14.2}%
+\contentsline {subsection}{\numberline {14.3}The figure script}{26}{subsection.14.3}%
+\contentsline {section}{\numberline {15}Other Information}{26}{section.15}%
+\contentsline {section}{\numberline {A}Full developmental ladder}{26}{appendix.A}%
+\contentsline {section}{\numberline {B}References cited in the text}{27}{appendix.B}%

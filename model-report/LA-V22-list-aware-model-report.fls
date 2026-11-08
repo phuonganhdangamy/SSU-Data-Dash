@@ -1,8 +1,8 @@
-PWD c:/Users/phuon/Desktop/SSU-Data-Dash/model-report
+PWD C:/Users/phuon/Desktop/SSU-Data-Dash/model-report
 INPUT c:/Users/phuon/AppData/Roaming/TinyTeX/texmf.cnf
 INPUT c:/Users/phuon/AppData/Roaming/TinyTeX/texmf-dist/web2c/texmf.cnf
 INPUT c:/Users/phuon/AppData/Roaming/TinyTeX/texmf-var/web2c/pdftex/pdflatex.fmt
-INPUT c:/Users/phuon/Desktop/SSU-Data-Dash/model-report/LA-V22-list-aware-model-report.tex
+INPUT LA-V22-list-aware-model-report.tex
 OUTPUT LA-V22-list-aware-model-report.log
 INPUT c:/Users/phuon/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/article.cls
 INPUT c:/Users/phuon/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/article.cls

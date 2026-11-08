@@ -40,6 +40,7 @@ Decision metric & Median absolute percentage error (MdAPE) on sold price \\
 Performance claim & Walk-forward MdAPE \(7.45\%\), MAPE \(9.79\%\), median bias \(-0.37\%\) \\
 Benchmark & 12-month community \$/sqft anchor, same sales: MdAPE \(15.33\%\) \\
 Source notebook & \texttt{off\_market\_models.ipynb} \\
+Submission code & \texttt{features.py}, \texttt{models.py}, \texttt{run.py} \\
 Figure reproduction & \texttt{model-report/reproduce\_v9\_figures.py} \\
 \end{tabular}
 \end{center}
@@ -82,7 +83,7 @@ with \(w = 1\). \(F\) is a gradient-boosted tree on log sold price. \(\delta\) i
 
 \subsection{Users and non-uses}
 
-The intended user is an internal valuation function that cannot see an ask. The model is a candidate from the development notebook. \texttt{models.py} still returns the median of the ten nearest earlier sales. Promoting \modelid{} is a separate change-control step.
+The intended user is an internal valuation function that cannot see an ask. The specification is implemented as \texttt{OffMarketModel} in \texttt{models.py}. \texttt{run.py} fits it, runs the walk-forward, and writes the test-file submission. Section~\ref{sec:repro} is that path. \texttt{NearestSalesBaseline} is still in the file and is not the model the pipeline calls.
 
 The model is not an appraisal. It should not be fed list price, days on market, or the third-party AVM. Days on market are known only after the sale. The AVM is absent from the test file, and its date on the training file can fall after the sale.
 
@@ -874,7 +875,7 @@ MAPE (\(9.77\%\)) exceeds MdAPE (\(7.53\%\)) because of the right tail of absolu
 
 \item List price, days on market, and the third-party AVM are excluded. Including the ask would answer a different question. Including the others would leak.
 
-\item \texttt{models.py} does not implement \modelid{}. A sign-off on this document is a sign-off on the specification and the evidence.
+\item The runnable implementation is \texttt{OffMarketModel}, called from \texttt{run.py} (Section~\ref{sec:repro}). A sign-off on this document covers that entry point together with the specification and the evidence. It does not cover a separate production service. The ten-nearest-sales baseline remains in \texttt{models.py} and is not called.
 
 \item No bootstrap interval is reported. Stability is the month path: MdAPE inside \(7.10\%\) to \(8.17\%\), bias not inside a tight band.
 \end{enumerate}
@@ -904,13 +905,55 @@ Each score should be stored with the listing identifier, the predicted price, th
 \section{Reproducibility}
 \label{sec:repro}
 
-Developmental figures and the segmented tables are produced by
+We now have two ways to rebuild \modelid{}, and they agree on the claim. The figures and the one-origin developmental fit come from the figure script. The walk-forward, including the month path in Section~\ref{sec:walk}, is what the submission code writes. That code is the model we hand in.
+
+\subsection{Where the submission lives}
+
+\begin{center}
+\small
+\begin{tabular}{p{3.5cm}p{11.2cm}}
+\toprule
+File & What it does for \modelid{} \\
+\midrule
+\texttt{data.py} & Loads \texttt{listings} and \texttt{test\_off\_market} from Hugging Face (\texttt{Baliyang/SSU\_data\_dash}), or from the folder in \texttt{DATA\_DIR}. \texttt{hide\_answers} drops sold price, sale date, days on market, the third-party AVM, and list price before an off-market row is scored. \\
+\texttt{features.py} & Columns we can read off the home: \texttt{home\_numbers} without list price, and \texttt{remark\_flags} for the thirteen phrases. \\
+\texttt{models.py} & \texttt{OffMarketModel}. \texttt{fit} builds the 12-month price tables, the same-pin comps, and the remarks ridge from the sales it was given, measures \(\delta\) on the last three months of that sample, then fits LightGBM on \(\log Y\). \texttt{predict} multiplies by \(\exp(-\delta)\). \\
+\texttt{run.py} & The four commands below. \texttt{make\_model("off\_market")} is the constructor it calls. \\
+\texttt{check\_submission.py} & Checks the written file: one row per test id, and a positive finite price. \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\texttt{NearestSalesBaseline} and the starter \texttt{FeatureModel} are still in \texttt{models.py}. \texttt{run.py} does not call them. The price levels, the building comps, and the remarks score are built inside \texttt{fit}, from the training sales only. List price never enters the design. Category levels are the values seen in that training slice.
+
+The shift window moves with the sample. \texttt{fit} takes the last sale month in the data it was given and measures \(\delta\) on that month and the two before it, using a tree fit only before those three months. The scoring tree is then fit on the whole sample, including those three months, and every prediction is multiplied by \(\exp(-\delta)\) with weight \(1\). On a sample that stops at 30 November 2025 the window is September--November, and the shift we measured is \(+1.58\%\). A later sample gets a later window. That is the same rule as the walk-forward in Section~\ref{sec:calibration}.
+
+The tree settings are the ones in Section~\ref{sec:calibration}: 127 leaves, learning rate \(0.03\), 700 trees, seed \(0\). LightGBM \(4.6.0\) is the pin in \texttt{requirements.txt}. A training slice under \(8{,}000\) rows, which is only the unit test, uses a short tree of 30 trees and 15 leaves. Every fit behind the numbers in this document is above that cutoff. On those short slices the remarks vectorizer also lowers its minimum document frequency from 40 to 1, so the unit test can fit a vocabulary. The full fits keep 40.
+
+\subsection{What we run}
+
+From the repository root:
+
+\begin{quote}
+\texttt{py -3 run.py validate}\\
+\texttt{py -3 run.py report}\\
+\texttt{py -3 run.py predict}\\
+\texttt{py -3 run.py check}
+\end{quote}
+
+\texttt{validate} loops December 2025 through May 2026. For each month it fits on sales that closed before that month, hides the after-sale columns and the list price, and scores the month. Both tracks are written. The off-market rows are the ones for this document. Predicted prices are rounded to the nearest dollar. The file is \texttt{validation\_predictions.csv} under \texttt{outputs/}.
+
+\texttt{report} scores that file. It writes a markdown report, a JSON report, a LaTeX score table, and \texttt{error\_by\_price\_range.png}. The off-market rows in the file we scored match the walk-forward table: pooled MdAPE \(7.45\), MAPE \(9.79\), median signed error \(-0.37\), and the six monthly MdAPEs \(7.42\), \(7.27\), \(8.17\), \(7.10\), \(7.44\), \(7.39\). V7 stays the notebook challenger. This run does not refit it.
+
+\texttt{predict} is the file we would submit, and it is a different fit. It trains on every closed sale in \texttt{listings}, through May 2026, so the shift is measured on March--May 2026 and the scoring tree has seen those months. It then scores \texttt{test\_off\_market}, which has no list price and no sold price. It writes \texttt{submission\_off\_market.csv} under \texttt{submissions/}, with columns \texttt{ml\_num} and \texttt{predicted\_price}. This command does not produce the performance claim. \texttt{check} confirms the ids and the prices before the file is handed in.
+
+\subsection{The figure script}
+
+The charts in this document, and the developmental \(7.53\) / \(9.77\) / \(-2.10\), come from
 \begin{quote}
 \texttt{py -3 model-report/reproduce\_v9\_figures.py}
 \end{quote}
-run from the repository root. The script rebuilds the 12-month price tables, the same-pin comps, the remarks ridge, and one direct LightGBM with the shift measured on September--November 2025. On 7 November 2026 that refit returned MdAPE \(7.53\), MAPE \(9.77\), median signed error \(-2.10\), and a shift of \(+1.58\%\), matching the notebook.
-
-Walk-forward numbers are the stored outputs of \texttt{off\_market\_models.ipynb}. Reproducing them means re-running that notebook's walk-forward cells. The tree seed is \(0\). LightGBM \(4.6\) was the library used for the reproduction refit.
+run from the repository root. The script rebuilds the price tables, the same-pin comps, the remarks ridge, and one direct LightGBM with the shift measured on September--November 2025, and writes \texttt{model-report/figures} plus \texttt{om\_v9\_diagnostics.json}. It does not call \texttt{run.py}, and it does not repeat the six walk-forward refits. On 7 November 2026 that refit matched the notebook, including the \(+1.58\%\) shift. The month path was first stored in \texttt{off\_market\_models.ipynb}. The \texttt{validate} run above is the check that \texttt{OffMarketModel} reproduces it.
 
 
 \appendix
