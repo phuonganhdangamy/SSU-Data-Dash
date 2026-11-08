@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.3.2)  7 NOV 2026 15:00
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.3.2)  8 NOV 2026 10:43
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -573,89 +573,99 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 \openout5 = `OM-V9-off-market-model-report.toc'.
 
  [3] [4] [5] [6] [7] [8]
-<figures/om_monthly_price.png, id=327, 728.12025pt x 278.2395pt>
+<figures/om_monthly_price.png, id=343, 728.12025pt x 278.2395pt>
 File: figures/om_monthly_price.png Graphic file (type png)
 <use figures/om_monthly_price.png>
-Package pdftex.def Info: figures/om_monthly_price.png  used on input line 310.
+Package pdftex.def Info: figures/om_monthly_price.png  used on input line 311.
 (pdftex.def)             Requested size: 480.56673pt x 183.64287pt.
  [9] [10 <./figures/om_monthly_price.png>] [11] [12]
-<figures/om_feature_gain.png, id=353, 583.12856pt x 350.5095pt>
+<figures/om_feature_gain.png, id=369, 583.12856pt x 350.5095pt>
 File: figures/om_feature_gain.png Graphic file (type png)
 <use figures/om_feature_gain.png>
-Package pdftex.def Info: figures/om_feature_gain.png  used on input line 469.
+Package pdftex.def Info: figures/om_feature_gain.png  used on input line 470.
 (pdftex.def)             Requested size: 442.1205pt x 265.74818pt.
  [13]
-Underfull \hbox (badness 1112) in paragraph at lines 503--503
+Underfull \hbox (badness 1112) in paragraph at lines 504--504
 []|\OT1/cmr/m/n/10 Blend the com-mu-nity me-
  []
 
 
-Underfull \hbox (badness 1127) in paragraph at lines 505--505
+Underfull \hbox (badness 1127) in paragraph at lines 506--506
 []|\OT1/cmr/m/n/10 Separate house and condo
  []
 
 
-Underfull \hbox (badness 1946) in paragraph at lines 508--508
+Underfull \hbox (badness 1946) in paragraph at lines 509--509
 []|\OT1/cmr/m/n/10 A land-value term and a
  []
 
 [14 <./figures/om_feature_gain.png>] [15] [16]
-<figures/om_calibration.png, id=379, 392.96812pt x 393.8715pt>
+<figures/om_calibration.png, id=395, 392.96812pt x 393.8715pt>
 File: figures/om_calibration.png Graphic file (type png)
 <use figures/om_calibration.png>
-Package pdftex.def Info: figures/om_calibration.png  used on input line 623.
+Package pdftex.def Info: figures/om_calibration.png  used on input line 624.
 (pdftex.def)             Requested size: 307.56241pt x 308.2883pt.
  [17] [18 <./figures/om_calibration.png>] [19]
-<figures/om_walkforward_mdape.png, id=398, 669.85257pt x 307.1475pt>
+<figures/om_walkforward_mdape.png, id=414, 669.85257pt x 307.1475pt>
 File: figures/om_walkforward_mdape.png Graphic file (type png)
 <use figures/om_walkforward_mdape.png>
-Package pdftex.def Info: figures/om_walkforward_mdape.png  used on input line 717.
+Package pdftex.def Info: figures/om_walkforward_mdape.png  used on input line 718.
 (pdftex.def)             Requested size: 480.56673pt x 220.35397pt.
  [20 <./figures/om_walkforward_mdape.png>]
-<figures/om_walkforward_bias.png, id=410, 612.03656pt x 263.7855pt>
+<figures/om_walkforward_bias.png, id=427, 612.03656pt x 263.7855pt>
 File: figures/om_walkforward_bias.png Graphic file (type png)
 <use figures/om_walkforward_bias.png>
-Package pdftex.def Info: figures/om_walkforward_bias.png  used on input line 746.
+Package pdftex.def Info: figures/om_walkforward_bias.png  used on input line 747.
 (pdftex.def)             Requested size: 442.1205pt x 190.55331pt.
  [21 <./figures/om_walkforward_bias.png>]
-<figures/om_error_by_decile.png, id=417, 597.58257pt x 292.6935pt>
+<figures/om_error_by_decile.png, id=434, 597.58257pt x 292.6935pt>
 File: figures/om_error_by_decile.png Graphic file (type png)
 <use figures/om_error_by_decile.png>
-Package pdftex.def Info: figures/om_error_by_decile.png  used on input line 793.
+Package pdftex.def Info: figures/om_error_by_decile.png  used on input line 794.
 (pdftex.def)             Requested size: 442.1205pt x 216.55406pt.
  [22 <./figures/om_error_by_decile.png>]
-<figures/om_error_by_type.png, id=425, 612.03656pt x 292.6935pt>
+<figures/om_error_by_type.png, id=441, 612.03656pt x 292.6935pt>
 File: figures/om_error_by_type.png Graphic file (type png)
 <use figures/om_error_by_type.png>
-Package pdftex.def Info: figures/om_error_by_type.png  used on input line 822.
+Package pdftex.def Info: figures/om_error_by_type.png  used on input line 823.
 (pdftex.def)             Requested size: 422.90106pt x 202.24455pt.
  [23 <./figures/om_error_by_type.png>]
-<figures/om_error_distribution.png, id=432, 510.85857pt x 321.6015pt>
+<figures/om_error_distribution.png, id=448, 510.85857pt x 321.6015pt>
 File: figures/om_error_distribution.png Graphic file (type png)
 <use figures/om_error_distribution.png>
-Package pdftex.def Info: figures/om_error_distribution.png  used on input line 848.
+Package pdftex.def Info: figures/om_error_distribution.png  used on input line 849.
 (pdftex.def)             Requested size: 413.28767pt x 260.18172pt.
- [24 <./figures/om_error_distribution.png>] [25] [26] [27] (./OM-V9-off-market-model-report.aux)
+ [24 <./figures/om_error_distribution.png>] [25]
+Underfull \hbox (badness 10000) in paragraph at lines 918--919
+[]|\OT1/cmr/m/n/10 Loads \OT1/cmtt/m/n/10 listings \OT1/cmr/m/n/10 and \OT1/cmtt/m/n/10 test[]off[]market \OT1/cmr/m/n/10 from Hug-ging Face
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 918--919
+\OT1/cmr/m/n/10 (\OT1/cmtt/m/n/10 Baliyang/SSU[]data[]dash\OT1/cmr/m/n/10 ), or from the folder in \OT1/cmtt/m/n/10 DATA[]DIR\OT1/cmr/m/n/10 .
+ []
+
+[26] [27] [28] (./OM-V9-off-market-model-report.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2026-01-19>
  ***********
 Package rerunfilecheck Info: File `OM-V9-off-market-model-report.out' has not changed.
-(rerunfilecheck)             Checksum: 650AB3B0F69988BEEEA3AB70563310DF;9296.
+(rerunfilecheck)             Checksum: 237A76044217DA6BC42E0F2FC1D8AAEE;9767.
  ) 
 Here is how much of TeX's memory you used:
- 22848 strings out of 469454
- 430904 string characters out of 5465427
+ 22855 strings out of 469454
+ 431007 string characters out of 5465427
  816067 words of memory out of 5000000
- 51043 multiletter control sequences out of 15000+600000
+ 51046 multiletter control sequences out of 15000+600000
  641051 words of font info for 91 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
  84i,17n,94p,726b,814s stack positions out of 10000i,1000n,20000p,200000b,200000s
  <c:/Users/phuon/AppData/Roaming/TinyTeX/texmf-var/fonts/pk/ljfour/jknappen/ec/tcrm1095.600pk> <c:/Users/phuon/AppData/Roaming/TinyTeX/texmf-var/fonts/pk/ljfour/jknappen/ec/tcrm1000.600pk><c:/Users/phuon/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb><c:/Users/phuon/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb><c:/Users/phuon/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><c:/Users/phuon/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><c:/Users/phuon/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb><c:/Users/phuon/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb><c:/Users/phuon/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb><c:/Users/phuon/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><c:/Users/phuon/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb><c:/Users/phuon/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb><c:/Users/phuon/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb><c:/Users/phuon/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb><c:/Users/phuon/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><c:/Users/phuon/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb><c:/Users/phuon/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb><c:/Users/phuon/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
-Output written on OM-V9-off-market-model-report.pdf (27 pages, 648612 bytes).
+Output written on OM-V9-off-market-model-report.pdf (28 pages, 656471 bytes).
 PDF statistics:
- 568 PDF objects out of 1000 (max. 8388607)
- 483 compressed objects within 5 object streams
- 117 named destinations out of 1000 (max. 500000)
- 461 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 594 PDF objects out of 1000 (max. 8388607)
+ 507 compressed objects within 6 object streams
+ 121 named destinations out of 1000 (max. 500000)
+ 485 words of extra memory for PDF output out of 10000 (max. 10000000)
 

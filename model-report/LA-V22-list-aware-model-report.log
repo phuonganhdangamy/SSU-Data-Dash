@@ -1,10 +1,9 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.3.2)  7 NOV 2026 00:39
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.3.2)  8 NOV 2026 10:43
 entering extended mode
  restricted \write18 enabled.
- file:line:error style messages enabled.
  %&-line parsing enabled.
-**c:/Users/phuon/Desktop/SSU-Data-Dash/model-report/LA-V22-list-aware-model-report.tex
-(c:/Users/phuon/Desktop/SSU-Data-Dash/model-report/LA-V22-list-aware-model-report.tex
+**LA-V22-list-aware-model-report.tex
+(./LA-V22-list-aware-model-report.tex
 LaTeX2e <2025-11-01>
 L3 programming layer <2026-01-19>
 (c:/Users/phuon/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/article.cls
@@ -572,89 +571,94 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 \openout5 = `LA-V22-list-aware-model-report.toc'.
 
  [3] [4] [5] [6] [7]
-<figures/list_vs_sold.png, id=334, 404.26031pt x 422.7795pt>
+<figures/list_vs_sold.png, id=350, 404.26031pt x 422.7795pt>
 File: figures/list_vs_sold.png Graphic file (type png)
 <use figures/list_vs_sold.png>
-Package pdftex.def Info: figures/list_vs_sold.png  used on input line 275.
+Package pdftex.def Info: figures/list_vs_sold.png  used on input line 276.
 (pdftex.def)             Requested size: 346.00862pt x 361.86728pt.
  [8]
-<figures/monthly_close_vs_list.png, id=340, 727.66856pt x 292.6935pt>
+<figures/monthly_close_vs_list.png, id=356, 727.66856pt x 292.6935pt>
 File: figures/monthly_close_vs_list.png Graphic file (type png)
 <use figures/monthly_close_vs_list.png>
-Package pdftex.def Info: figures/monthly_close_vs_list.png  used on input line 287.
+Package pdftex.def Info: figures/monthly_close_vs_list.png  used on input line 288.
 (pdftex.def)             Requested size: 480.56673pt x 193.30334pt.
  [9 <./figures/list_vs_sold.png>] [10 <./figures/monthly_close_vs_list.png>] [11] [12]
-<figures/feature_gain.png, id=366, 583.12856pt x 350.5095pt>
+<figures/feature_gain.png, id=382, 583.12856pt x 350.5095pt>
 File: figures/feature_gain.png Graphic file (type png)
 <use figures/feature_gain.png>
-Package pdftex.def Info: figures/feature_gain.png  used on input line 416.
+Package pdftex.def Info: figures/feature_gain.png  used on input line 417.
 (pdftex.def)             Requested size: 442.1205pt x 265.74818pt.
  [13 <./figures/feature_gain.png>]
-Underfull \hbox (badness 8132) in paragraph at lines 452--452
+Underfull \hbox (badness 8132) in paragraph at lines 453--453
 []|\OT1/cmr/m/n/10 Rotated co-or-di-nates, $\OML/cmm/m/it/10 k$\OT1/cmr/m/n/10 -
  []
 
 [14]
-<figures/calibration_ratio.png, id=378, 401.55019pt x 393.8715pt>
+<figures/calibration_ratio.png, id=394, 401.55019pt x 393.8715pt>
 File: figures/calibration_ratio.png Graphic file (type png)
 <use figures/calibration_ratio.png>
-Package pdftex.def Info: figures/calibration_ratio.png  used on input line 508.
+Package pdftex.def Info: figures/calibration_ratio.png  used on input line 509.
 (pdftex.def)             Requested size: 297.94902pt x 292.25966pt.
  [15] [16 <./figures/calibration_ratio.png>] [17] [18]
-<figures/walkforward_mdape.png, id=407, 669.85257pt x 307.1475pt>
+<figures/walkforward_mdape.png, id=424, 669.85257pt x 307.1475pt>
 File: figures/walkforward_mdape.png Graphic file (type png)
 <use figures/walkforward_mdape.png>
-Package pdftex.def Info: figures/walkforward_mdape.png  used on input line 610.
+Package pdftex.def Info: figures/walkforward_mdape.png  used on input line 611.
 (pdftex.def)             Requested size: 480.56673pt x 220.35397pt.
-<figures/walkforward_bias.png, id=408, 612.03656pt x 263.7855pt>
+<figures/walkforward_bias.png, id=425, 612.03656pt x 263.7855pt>
 File: figures/walkforward_bias.png Graphic file (type png)
 <use figures/walkforward_bias.png>
-Package pdftex.def Info: figures/walkforward_bias.png  used on input line 639.
+Package pdftex.def Info: figures/walkforward_bias.png  used on input line 640.
 (pdftex.def)             Requested size: 442.1205pt x 190.55331pt.
  [19 <./figures/walkforward_mdape.png>]
-<figures/error_by_decile.png, id=416, 597.58257pt x 292.6935pt>
+<figures/error_by_decile.png, id=433, 597.58257pt x 292.6935pt>
 File: figures/error_by_decile.png Graphic file (type png)
 <use figures/error_by_decile.png>
-Package pdftex.def Info: figures/error_by_decile.png  used on input line 683.
+Package pdftex.def Info: figures/error_by_decile.png  used on input line 684.
 (pdftex.def)             Requested size: 442.1205pt x 216.55406pt.
  [20 <./figures/walkforward_bias.png>]
-<figures/error_by_type.png, id=424, 612.03656pt x 292.6935pt>
+<figures/error_by_type.png, id=440, 612.03656pt x 292.6935pt>
 File: figures/error_by_type.png Graphic file (type png)
 <use figures/error_by_type.png>
-Package pdftex.def Info: figures/error_by_type.png  used on input line 712.
+Package pdftex.def Info: figures/error_by_type.png  used on input line 713.
 (pdftex.def)             Requested size: 422.90106pt x 202.24455pt.
  [21 <./figures/error_by_decile.png>]
-<figures/error_distribution.png, id=431, 510.85857pt x 321.6015pt>
+<figures/error_distribution.png, id=447, 510.85857pt x 321.6015pt>
 File: figures/error_distribution.png Graphic file (type png)
 <use figures/error_distribution.png>
-Package pdftex.def Info: figures/error_distribution.png  used on input line 738.
+Package pdftex.def Info: figures/error_distribution.png  used on input line 739.
 (pdftex.def)             Requested size: 413.28767pt x 260.18172pt.
- [22 <./figures/error_by_type.png>] [23 <./figures/error_distribution.png>] [24] [25]
-Overfull \hbox (17.29189pt too wide) in paragraph at lines 863--864
-[]\OT1/cmr/m/n/10.95 The sta-tion-ar-ity checks use the aug-mented Dickey--Fuller and KPSS tests as im-ple-mented in \OT1/cmtt/m/n/10.95 statsmodels\OT1/cmr/m/n/10.95 ,
+ [22 <./figures/error_by_type.png>] [23 <./figures/error_distribution.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 809--810
+[]|\OT1/cmr/m/n/10 Loads \OT1/cmtt/m/n/10 listings \OT1/cmr/m/n/10 and \OT1/cmtt/m/n/10 test[]list[]aware \OT1/cmr/m/n/10 from Hug-ging Face
  []
 
-[26] (./LA-V22-list-aware-model-report.aux)
+
+Underfull \hbox (badness 10000) in paragraph at lines 809--810
+\OT1/cmr/m/n/10 (\OT1/cmtt/m/n/10 Baliyang/SSU[]data[]dash\OT1/cmr/m/n/10 ), or from the folder in \OT1/cmtt/m/n/10 DATA[]DIR\OT1/cmr/m/n/10 .
+ []
+
+[24] [25] [26] [27] (./LA-V22-list-aware-model-report.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2026-01-19>
  ***********
 Package rerunfilecheck Info: File `LA-V22-list-aware-model-report.out' has not changed.
-(rerunfilecheck)             Checksum: DF5D17AD192E7E8DF47AC79616742517;9415.
+(rerunfilecheck)             Checksum: 194BECF69CC2CFCD5032ED65D7877C7F;9886.
  ) 
 Here is how much of TeX's memory you used:
- 22803 strings out of 469454
- 430196 string characters out of 5465427
- 820387 words of memory out of 5000000
- 51015 multiletter control sequences out of 15000+600000
+ 22809 strings out of 469454
+ 430151 string characters out of 5465427
+ 819389 words of memory out of 5000000
+ 51018 multiletter control sequences out of 15000+600000
  638798 words of font info for 83 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
- 84i,10n,94p,805b,814s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 84i,10n,94p,755b,814s stack positions out of 10000i,1000n,20000p,200000b,200000s
  <c:/Users/phuon/AppData/Roaming/TinyTeX/texmf-var/fonts/pk/ljfour/jknappen/ec/tcrm1000.600pk> <c:/Users/phuon/AppData/Roaming/TinyTeX/texmf-var/fonts/pk/ljfour/jknappen/ec/tcrm1095.600pk><c:/Users/phuon/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb><c:/Users/phuon/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb><c:/Users/phuon/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><c:/Users/phuon/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><c:/Users/phuon/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb><c:/Users/phuon/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb><c:/Users/phuon/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><c:/Users/phuon/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb><c:/Users/phuon/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb><c:/Users/phuon/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb><c:/Users/phuon/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><c:/Users/phuon/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb><c:/Users/phuon/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb><c:/Users/phuon/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
-Output written on LA-V22-list-aware-model-report.pdf (26 pages, 687954 bytes).
+Output written on LA-V22-list-aware-model-report.pdf (27 pages, 695644 bytes).
 PDF statistics:
- 566 PDF objects out of 1000 (max. 8388607)
- 484 compressed objects within 5 object streams
- 110 named destinations out of 1000 (max. 500000)
- 490 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 589 PDF objects out of 1000 (max. 8388607)
+ 505 compressed objects within 6 object streams
+ 114 named destinations out of 1000 (max. 500000)
+ 514 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -40,6 +40,7 @@ Decision metric & Median absolute percentage error (MdAPE) on sold price \\
 Performance claim & Walk-forward MdAPE \(4.28\%\), MAPE \(5.37\%\), median bias \(+0.90\%\) \\
 Benchmark & List price on the same sales: MdAPE \(7.26\%\), MAPE \(8.09\%\), median bias \(+5.68\%\) \\
 Source notebooks & \texttt{list\_aware\_eda.ipynb}, \texttt{list\_aware\_models.ipynb} \\
+Submission code & \texttt{features.py}, \texttt{models.py}, \texttt{run.py} \\
 Figure reproduction & \texttt{model-report/reproduce\_v22\_figures.py} \\
 \end{tabular}
 \end{center}
@@ -83,7 +84,7 @@ where \(L_i\) is the list price and \(\hat g_i\) is the model's prediction of th
 
 \subsection{Users and non-uses}
 
-The intended user is an internal valuation or model-risk function that can see the listing. The model is a candidate specification from a development notebook. It is not wired into \texttt{models.py}, which still returns the list price itself. Promoting \modelid{} into that pipeline is a separate change-control step.
+The intended user is an internal valuation or model-risk function that can see the listing. The specification is implemented as \texttt{ListAwareModel} in \texttt{models.py}. \texttt{run.py} fits it, runs the walk-forward, and writes the test-file submission. Section~\ref{sec:repro} is that path. \texttt{ListPriceBaseline} is still in the file and is not the model the pipeline calls.
 
 The model is not an appraisal. It does not use an inspection, a condition grade, or a human override. It should not be used to value a home that has not been listed, and it should not be fed \texttt{days\_on\_market}, \texttt{sold\_price}, or the third-party AVM field. Those columns are known only after the fact, or they are missing from the list-aware test file.
 
@@ -764,7 +765,7 @@ The error distribution is unimodal and slightly right of zero. MAPE (\(5.53\%\))
 
 \item The third-party AVM was excluded. If a future process can prove the estimate was known before the listing and will be present at score time, leaving it out is a limitation to revisit. Including it today would be leakage.
 
-\item \texttt{models.py} does not implement \modelid{}. A sign-off on this document is a sign-off on the specification and the evidence. It is not a sign-off on a production binary.
+\item The runnable implementation is \texttt{ListAwareModel}, called from \texttt{run.py} (Section~\ref{sec:repro}). A sign-off on this document covers that entry point together with the specification and the evidence. It does not cover a separate production service. The list-price baseline remains in \texttt{models.py} and is not called.
 
 \item No bootstrap confidence interval is reported. Resampling homes inside a month would ignore the dependence that the whole validation design exists to respect. Stability is shown by the month path instead: six months, MdAPE inside a \(0.6\)-point band, bias always positive.
 \end{enumerate}
@@ -795,15 +796,53 @@ Champion--challenger in production should keep the list price and V21 alongside 
 \section{Reproducibility}
 \label{sec:repro}
 
-Developmental figures and the segmented tables in this document are produced by
+We now have two ways to rebuild \modelid{}, and they agree on the claim. The figures and the one-origin developmental fit come from the figure script. The walk-forward, including the month path in Section~\ref{sec:walk}, is what the submission code writes. That code is the model we hand in.
+
+\subsection{Where the submission lives}
+
+\begin{center}
+\small
+\begin{tabular}{p{3.5cm}p{11.2cm}}
+\toprule
+File & What it does for \modelid{} \\
+\midrule
+\texttt{data.py} & Loads \texttt{listings} and \texttt{test\_list\_aware} from Hugging Face (\texttt{Baliyang/SSU\_data\_dash}), or from the folder in \texttt{DATA\_DIR}. \texttt{hide\_answers} drops sold price, sale date, days on market, and the third-party AVM before a validation row is scored. \\
+\texttt{features.py} & Columns we can read off the home: \texttt{home\_numbers} with the log list price, \texttt{lot\_area}, and \texttt{area\_is\_range}. \\
+\texttt{models.py} & \texttt{ListAwareModel}. \texttt{fit} builds the peer-ask tables, the three-month discount, the market lag, and the SARIMAX residual forecast from the sales it was given, then fits LightGBM on \(\log(Y/L)\). \texttt{predict} returns list price times \(\exp(\mathrm{gap})\). \\
+\texttt{run.py} & The four commands below. \texttt{make\_model("list\_aware")} is the constructor it calls. \\
+\texttt{check\_submission.py} & Checks the written file: one row per test id, and a positive finite price. \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\texttt{ListPriceBaseline} and the starter \texttt{FeatureModel} are still in \texttt{models.py}. \texttt{run.py} does not call them. Comp columns are not built in \texttt{features.py}. They are built inside \texttt{fit}, from the training sales only, and then looked up for the home being priced. Category levels are the values seen in that same training slice. An unseen community arrives as missing.
+
+The tree settings are the ones in Section~\ref{sec:calibration}: 127 leaves, learning rate \(0.03\), 700 trees, seed \(0\). LightGBM \(4.6.0\) is the pin in \texttt{requirements.txt}, and \texttt{statsmodels} \(0.14.6\) is what fits the SARIMAX inside \texttt{fit}. A training slice under \(8{,}000\) rows, which is only the unit test, uses a short tree of 30 trees and 15 leaves so the plumbing can be checked. Every fit behind the numbers in this document is above that cutoff.
+
+\subsection{What we run}
+
+From the repository root:
+
+\begin{quote}
+\texttt{py -3 run.py validate}\\
+\texttt{py -3 run.py report}\\
+\texttt{py -3 run.py predict}\\
+\texttt{py -3 run.py check}
+\end{quote}
+
+\texttt{validate} loops December 2025 through May 2026. For each month it fits on sales that closed before that month, hides the after-sale columns, and scores the month. Both tracks are written, so the file also contains the off-market model. The list-aware rows are the ones for this document. Predicted prices are rounded to the nearest dollar. The file is \texttt{validation\_predictions.csv} under \texttt{outputs/}.
+
+\texttt{report} scores that file. It writes a markdown report, a JSON report, a LaTeX score table, and \texttt{error\_by\_price\_range.png}. The list-aware rows in the file we scored match the V22 column of the walk-forward table: pooled MdAPE \(4.28\), MAPE \(5.37\), median signed error \(+0.90\), and the six monthly MdAPEs from \(3.97\) in December to \(4.55\) in May. V21 stays a notebook comparison. This run does not refit it.
+
+\texttt{predict} is the file we would submit, and it is a different fit. It trains on every closed sale in \texttt{listings}, through May 2026, then scores \texttt{test\_list\_aware}. It writes \texttt{submission\_list\_aware.csv} under \texttt{submissions/}, with columns \texttt{ml\_num} and \texttt{predicted\_price}. Those homes have no sold price in this repository, so the command does not produce the performance claim. The peer tables and the residual forecast in that fit have seen the six validation months, which is what we want when the home was listed after May 2026. \texttt{check} confirms the ids and the prices before the file is handed in.
+
+\subsection{The figure script}
+
+The charts in this document, and the developmental \(4.43\) / \(5.53\) / \(+1.49\), come from
 \begin{quote}
 \texttt{py -3 model-report/reproduce\_v22\_figures.py}
 \end{quote}
-run from the repository root. The script reads the listings file, refits the log-linear model, the SARIMAX, the lookup tables, and one LightGBM with the settings in Section~\ref{sec:calibration}, and writes the \texttt{figures} folder plus \texttt{v22\_diagnostics.json}. On 6 November 2026 that refit returned MdAPE \(4.43\), MAPE \(5.53\), and median signed error \(+1.49\), matching the notebook.
-
-Walk-forward V21 and V22 numbers are the outputs stored in that notebook, cells for the V22 walk-forward. Reproducing them means re-running those cells. They refit the full stack six times.
-
-The notebook's random seed on the estimators is \(0\). LightGBM \(4.6\) was the library used for the reproduction refit.
+run from the repository root. The script refits the log-linear model, the SARIMAX, the lookup tables, and one LightGBM on sales closed before December 2025, and writes \texttt{model-report/figures} plus \texttt{v22\_diagnostics.json}. It does not call \texttt{run.py}. On 6 November 2026 that refit matched the notebook. The month path was first stored in the walk-forward cells of \texttt{list\_aware\_models.ipynb}. The \texttt{validate} run above is the check that \texttt{ListAwareModel} reproduces it.
 
 \section{Other Information}
 
@@ -860,6 +899,6 @@ LightGBM: a highly efficient gradient boosting decision tree.
 \item Rosen, S. (1974). Hedonic prices and implicit markets: product differentiation in pure competition. \emph{Journal of Political Economy}, 82(1), 34--55.
 \end{itemize}
 
-The stationarity checks use the augmented Dickey--Fuller and KPSS tests as implemented in \texttt{statsmodels}, and a robust STL decomposition with a 12-month period. The project definition of walk-forward validation is the one in \texttt{handout.md} and \texttt{run.py}: train on the past, score the next month, repeat.
+The stationarity checks use the augmented Dickey--Fuller and KPSS tests, and a robust STL decomposition with a 12-month period. Walk-forward validation follows \texttt{handout.md} and \texttt{run.py}: train on the past, score the next month, and repeat.
 
 \end{document}

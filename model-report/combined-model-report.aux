@@ -1,0 +1,62 @@
+\relax 
+\providecommand\hyper@newdestlabel[2]{}
+\providecommand\HyField@AuxAddToFields[1]{}
+\providecommand\HyField@AuxAddToCoFields[2]{}
+\@writefile{toc}{\contentsline {section}{\numberline {1}Summary}{3}{section.1}\protected@file@percent }
+\newlabel{sec:summary}{{1}{3}{Summary}{section.1}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {2}Two questions, one book}{3}{section.2}\protected@file@percent }
+\newlabel{sec:questions}{{2}{3}{Two questions, one book}{section.2}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {3}Shared data}{3}{section.3}\protected@file@percent }
+\newlabel{sec:data}{{3}{3}{Shared data}{section.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1}Source and the split we both use}{3}{subsection.3.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2}Fields we looked at and left out of both models}{4}{subsection.3.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {4}Shared preparation, then the fork}{4}{section.4}\protected@file@percent }
+\newlabel{sec:clean}{{4}{4}{Shared preparation, then the fork}{section.4}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {5}What the market looks like}{5}{section.5}\protected@file@percent }
+\newlabel{sec:market}{{5}{5}{What the market looks like}{section.5}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Median sold price by month. The band is the validation window. Both models have to live with this path. Only list-aware{} also sees the ask.}}{6}{figure.caption.3}\protected@file@percent }
+\providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
+\newlabel{fig:monthly}{{1}{6}{Median sold price by month. The band is the validation window. Both models have to live with this path. Only \la {} also sees the ask}{figure.caption.3}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {6}Features}{6}{section.6}\protected@file@percent }
+\newlabel{sec:features}{{6}{6}{Features}{section.6}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.1}Which column is in which model}{7}{subsection.6.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.2}List-aware columns}{7}{subsection.6.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.3}Off-market columns}{8}{subsection.6.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.4}What each tree actually splits on}{9}{subsection.6.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.5}Candidates we tested and did not keep}{9}{subsection.6.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {7}Calibration}{9}{section.7}\protected@file@percent }
+\newlabel{sec:calibration}{{7}{9}{Calibration}{section.7}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Left, list-aware: median predicted close ratio against median realized close ratio, by bin of predicted ratio. Right, off-market: median predicted price against median sold price, by bin of predicted price. Both are the developmental validation, after each model's own calibration.}}{11}{figure.caption.4}\protected@file@percent }
+\newlabel{fig:cal}{{2}{11}{Left, \la : median predicted close ratio against median realized close ratio, by bin of predicted ratio. Right, \om : median predicted price against median sold price, by bin of predicted price. Both are the developmental validation, after each model's own calibration}{figure.caption.4}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {8}Architecture}{11}{section.8}\protected@file@percent }
+\newlabel{sec:architecture}{{8}{11}{Architecture}{section.8}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Scoring path. Shared attributes feed both trees. On the left, lookups and a SARIMAX build columns, and the tree returns a gap around the ask. On the right, lookups, written phrase flags, and a ridge build columns, the tree returns a log price, and one shift scales it. The OLS, the SARIMAX, the ridge, the tables, and \(\delta \) are all fit on sales that closed before the origin. The right path never reads list price, and a building comp has to have closed before the home was listed.}}{12}{figure.caption.5}\protected@file@percent }
+\newlabel{fig:flow}{{3}{12}{Scoring path. Shared attributes feed both trees. On the left, lookups and a SARIMAX build columns, and the tree returns a gap around the ask. On the right, lookups, written phrase flags, and a ridge build columns, the tree returns a log price, and one shift scales it. The OLS, the SARIMAX, the ridge, the tables, and \(\delta \) are all fit on sales that closed before the origin. The right path never reads list price, and a building comp has to have closed before the home was listed}{figure.caption.5}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {9}How we validated}{12}{section.9}\protected@file@percent }
+\newlabel{sec:walk}{{9}{12}{How we validated}{section.9}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {10}Results}{13}{section.10}\protected@file@percent }
+\newlabel{sec:results}{{10}{13}{Results}{section.10}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces Walk-forward MdAPE by month. Left, the list price, the list-aware model without community as a category, and the list-aware model. Right, the 12-month community anchor, the gap model, and the off-market model.}}{14}{figure.caption.6}\protected@file@percent }
+\newlabel{fig:wf}{{4}{14}{Walk-forward MdAPE by month. Left, the list price, the list-aware model without community as a category, and the list-aware model. Right, the 12-month community anchor, the gap model, and the off-market model}{figure.caption.6}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces Median signed error by sale month. Positive means the prediction is high. The list-aware model stays above zero. The off-market model changes sign, and February is the low month.}}{14}{figure.caption.7}\protected@file@percent }
+\newlabel{fig:signed}{{5}{14}{Median signed error by sale month. Positive means the prediction is high. The list-aware model stays above zero. The off-market model changes sign, and February is the low month}{figure.caption.7}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {11}Where the model fails}{14}{section.11}\protected@file@percent }
+\newlabel{sec:fails}{{11}{14}{Where the model fails}{section.11}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {11.1}By price}{15}{subsection.11.1}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces Developmental MdAPE by sold-price decile. Left, list-aware, dashed line \(4.43\%\). Right, off-market, dashed line \(7.53\%\).}}{15}{figure.caption.8}\protected@file@percent }
+\newlabel{fig:decile}{{6}{15}{Developmental MdAPE by sold-price decile. Left, \la , dashed line \(4.43\%\). Right, \om , dashed line \(7.53\%\)}{figure.caption.8}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {11.2}By property type}{16}{subsection.11.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {11.3}By month, and by a stale tape}{16}{subsection.11.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {11.4}Where a feature is simply missing}{17}{subsection.11.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {12}Limitations}{17}{section.12}\protected@file@percent }
+\newlabel{sec:limits}{{12}{17}{Limitations}{section.12}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {13}Reproducing the results}{18}{section.13}\protected@file@percent }
+\newlabel{sec:repro}{{13}{18}{Reproducing the results}{section.13}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {A}Monitoring rules}{18}{appendix.A}\protected@file@percent }
+\newlabel{app:monitor}{{A}{18}{Monitoring rules}{appendix.A}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {B}List-aware specifications we compared}{19}{appendix.B}\protected@file@percent }
+\newlabel{app:ladder-la}{{B}{19}{List-aware specifications we compared}{appendix.B}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {C}Off-market specifications we compared}{19}{appendix.C}\protected@file@percent }
+\newlabel{app:ladder-om}{{C}{19}{Off-market specifications we compared}{appendix.C}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {D}References}{20}{appendix.D}\protected@file@percent }
+\gdef \@abspage@last{20}

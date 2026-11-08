@@ -1,0 +1,28 @@
+\contentsline {section}{\numberline {1}Summary}{3}{section.1}%
+\contentsline {section}{\numberline {2}Two questions, one book}{3}{section.2}%
+\contentsline {section}{\numberline {3}Shared data}{3}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Source and the split we both use}{3}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}Fields we looked at and left out of both models}{4}{subsection.3.2}%
+\contentsline {section}{\numberline {4}Shared preparation, then the fork}{4}{section.4}%
+\contentsline {section}{\numberline {5}What the market looks like}{5}{section.5}%
+\contentsline {section}{\numberline {6}Features}{6}{section.6}%
+\contentsline {subsection}{\numberline {6.1}Which column is in which model}{7}{subsection.6.1}%
+\contentsline {subsection}{\numberline {6.2}List-aware columns}{7}{subsection.6.2}%
+\contentsline {subsection}{\numberline {6.3}Off-market columns}{8}{subsection.6.3}%
+\contentsline {subsection}{\numberline {6.4}What each tree actually splits on}{9}{subsection.6.4}%
+\contentsline {subsection}{\numberline {6.5}Candidates we tested and did not keep}{9}{subsection.6.5}%
+\contentsline {section}{\numberline {7}Calibration}{9}{section.7}%
+\contentsline {section}{\numberline {8}Architecture}{11}{section.8}%
+\contentsline {section}{\numberline {9}How we validated}{12}{section.9}%
+\contentsline {section}{\numberline {10}Results}{13}{section.10}%
+\contentsline {section}{\numberline {11}Where the model fails}{14}{section.11}%
+\contentsline {subsection}{\numberline {11.1}By price}{15}{subsection.11.1}%
+\contentsline {subsection}{\numberline {11.2}By property type}{16}{subsection.11.2}%
+\contentsline {subsection}{\numberline {11.3}By month, and by a stale tape}{16}{subsection.11.3}%
+\contentsline {subsection}{\numberline {11.4}Where a feature is simply missing}{17}{subsection.11.4}%
+\contentsline {section}{\numberline {12}Limitations}{17}{section.12}%
+\contentsline {section}{\numberline {13}Reproducing the results}{18}{section.13}%
+\contentsline {section}{\numberline {A}Monitoring rules}{18}{appendix.A}%
+\contentsline {section}{\numberline {B}List-aware specifications we compared}{19}{appendix.B}%
+\contentsline {section}{\numberline {C}Off-market specifications we compared}{19}{appendix.C}%
+\contentsline {section}{\numberline {D}References}{20}{appendix.D}%
