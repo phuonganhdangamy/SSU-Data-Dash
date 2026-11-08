@@ -4,6 +4,8 @@ numpy==2.2.6; python_version < "3.14"
 numpy==2.3.5; python_version >= "3.14"
 pyarrow==23.0.1
 scikit-learn==1.7.2
+lightgbm==4.6.0
+statsmodels==0.14.6
 catboost==1.2.8
 matplotlib==3.10.9
 huggingface_hub==2.1.1
