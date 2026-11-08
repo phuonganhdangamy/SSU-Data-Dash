@@ -82,3 +82,63 @@ ax.set_ylabel("Median signed error (%)")
 ax.set_title("Walk-forward bias by sale month")
 ax.legend(frameon=False, ncol=2)
 save(fig, "report_signed.png")
+
+
+def gain_chart(pairs, title, name, figsize):
+    labels = [p[0] for p in pairs][::-1]
+    values = [p[1] for p in pairs][::-1]
+    fig, ax = plt.subplots(figsize=figsize)
+    ax.barh(labels, values, color=NAVY, height=0.72)
+    ax.set_xlabel("Share of split gain (%)")
+    ax.set_title(title)
+    ax.set_xlim(0, max(values) * 1.22)
+    for y, v in enumerate(values):
+        ax.text(v + 0.35, y, f"{v:.1f}", va="center", ha="left", fontsize=11, color=NAVY)
+    ax.tick_params(axis="y", labelsize=12, length=0)
+    ax.tick_params(axis="x", labelsize=10)
+    save(fig, name)
+
+
+gain_chart(
+    [
+        ("Peer ask", 21.6),
+        ("Community", 18.6),
+        ("Log ask", 9.6),
+        ("City lag", 9.4),
+        ("Recent discount", 7.5),
+        ("Month factor", 6.3),
+        ("Log size", 3.2),
+    ],
+    "List-aware",
+    "report_la_gain.png",
+    (6.4, 3.6),
+)
+
+gain_chart(
+    [
+        ("Lot missing", 33.3),
+        ("Building price", 17.8),
+        ("Log size", 12.9),
+        ("Community", 12.4),
+        ("Log frontage", 8.3),
+        ("Washrooms", 5.3),
+        ("Lot depth", 3.0),
+        ("Community $/sqft", 2.0),
+        ("Remarks score", 0.7),
+    ],
+    "Off-market",
+    "report_om_gain.png",
+    (6.4, 4.2),
+)
+
+fields = ["Lot frontage", "Lot depth", "External estimate", "Every other field"]
+blank = [58.2, 58.2, 0.9, 0.0]
+fig, ax = plt.subplots(figsize=(6.4, 2.9))
+ax.barh(fields[::-1], blank[::-1], color=NAVY, height=0.62)
+ax.set_xlabel("Share of the 150,000 training rows left blank")
+ax.set_xlim(0, 78)
+ax.set_title("Which fields are missing")
+for y, v in enumerate(blank[::-1]):
+    ax.text(v + 1.4, y, f"{v:.1f}%", va="center", ha="left", fontsize=10, color=NAVY)
+ax.tick_params(axis="y", length=0)
+save(fig, "report_lot_missing.png")
