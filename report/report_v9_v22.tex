@@ -1,0 +1,243 @@
+% Continuous-flow submission report: feature engineering, calibration and validation.
+% References: model-report/report.pdf and report/Data Dash 2026.pdf.
+\documentclass[10pt,letterpaper]{article}
+\usepackage[margin=1.7cm]{geometry}
+\usepackage{amsmath,booktabs,array,graphicx}
+\usepackage[hidelinks]{hyperref}
+\IfFileExists{model-report/figures/om_walkforward_mdape.png}{%
+ \graphicspath{{report/figures/}{model-report/figures/}{outputs/where_model_fails/final_v9_v22/}}%
+}{%
+ \graphicspath{{figures/}{../model-report/figures/}{../outputs/where_model_fails/final_v9_v22/}}%
+}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{3pt}
+\setlength{\textfloatsep}{6pt}
+\setlength{\intextsep}{6pt}
+% Keep each chart/table with its caption, without explicit page breaks.
+\makeatletter
+\renewenvironment{figure}[1][]{\par\smallskip\noindent\begin{minipage}{\linewidth}\def\@captype{figure}}{\end{minipage}\par\smallskip}
+\renewenvironment{table}[1][]{\par\smallskip\noindent\begin{minipage}{\linewidth}\def\@captype{table}}{\end{minipage}\par\smallskip}
+\newcommand{\captionof}[2]{\begingroup\def\@captype{#1}\caption{#2}\endgroup}
+\renewcommand\section{\@startsection{section}{1}{0pt}{7pt}{3pt}{\normalfont\large\bfseries}}
+\renewcommand\subsection{\@startsection{subsection}{2}{0pt}{5pt}{2pt}{\normalfont\normalsize\bfseries}}
+\long\def\@makecaption#1#2{\vskip3pt\small\textbf{#1:} #2\par}
+\makeatother
+\begin{document}
+\begin{center}
+{\Large\bfseries SSU Data Dash 2026: Market Information Before Model Complexity}\\[3pt]
+\textit{Team name}\\[2pt]
+Amy Dang Phuong, Maira Masroor, Shannon Tanoto, Yiwei Jiang\\[2pt]
+\small Video: \url{https://youtu.be/YOUR-VIDEO}\quad
+Code: \url{https://github.com/phuonganhdangamy/SSU-Data-Dash}
+\end{center}
+\section*{Summary}
+Our off-market model (OM-V9) estimates value without an asking price; our list-aware model (LA-V22) predicts closing price once listed. Their central design is \textbf{historical market features, time-aware calibration, and validation-led selection}, with a shared, frozen LightGBM configuration. Local comparable-sale levels and same-pin transactions establish off-market value; recent closing discounts and a forecast market factor help interpret asking prices. On 10,069 December 2025--May 2026 sales, monthly walk-forward MdAPE is \textbf{7.45\%} off-market and \textbf{4.28\%} list-aware, versus 15.33\% for a historical price anchor and 7.26\% for the ask. The residual risks are systematic luxury undervaluation, stale comparables, and individual corrections that make a baseline worse.
+
+\section{Data and features: represent the market available at prediction}
+The book contains 150,000 synthetic Toronto sales closed January 2021--May 2026, six property types, five municipalities, and 145 communities. The deployment files contain 3,974 off-market and 4,064 list-aware homes. Synthetic names and coordinates do not justify real-map joins. Outside data: none.
+
+Shared attributes are log floor area (midpoint of an area range), lot-missing flag, log frontage, depth, bedrooms, washrooms, parking, garage, coordinates, seasonal listing-month sine/cosine, and type, style, municipality and community. Lot absence distinguishes apartments from houses; defined fills accompany the flag rather than inventing a typical lot. Unseen categories remain missing. List-aware also uses lot area and an area-range flag. Days on market and third-party AVMs are excluded for post-sale timing and/or absence at deployment. Off-market never reads the ask.
+
+\subsection{List-aware: features explain the ask, rather than replace it}
+\begin{center}\small
+\begin{tabular}{p{4.4cm}p{11.2cm}}
+\toprule
+Column & What it is \\
+\midrule
+Log ask, lot area, area-was-a-range & Log asking price; raw frontage times depth (missing if either is missing); a flag when area was written as a range. \\
+Peer ask & List \$/sqft divided by median sold \$/sqft, same community and type, closed before the listing month. \\
+Three-month discount & Median sold/list in that cell over the three prior sale months. Missing on \(46\%\) of a frozen fit. \\
+City lag & Median log gap in the previous calendar month. \\
+Month factor & SARIMAX forecast of the monthly mean residual from a log-linear fit on the ask. \\
+\bottomrule
+\end{tabular}
+\end{center}
+Peer ask compares current asking \$/sqft with \emph{historical sold} \$/sqft, not with contemporaneous asking prices. Community/type cells with fewer than 30 sales fall back to type. The recent-discount feature similarly falls back to type and then missing. In monthly validation its support is 3,037 community, 7,000 type-fallback and 32 missing homes; the 46\% missing rate in the table refers to a separate frozen-origin experiment. Updating the history changes feature availability.
+
+\subsection{Off-market: construct the level that the ask cannot supply}
+\begin{center}\small
+\begin{tabular}{p{4.4cm}p{11.2cm}}
+\toprule
+Column & What it is \\
+\midrule
+12-month community \$/sqft & Median sold \$/sqft, same community and type, prior 12 months. A historical price-level feature, not a required price anchor. \\
+City \$/sqft, 3 and 12 months & The same median, citywide, at two windows. \\
+Building price and count & Same pin and type, closed before listing, reindexed to the listing month. Present for \(60\%\) of validation homes. \\
+Thirteen phrase flags & Written patterns in the remarks. Not a fitted model. \\
+Remarks score & A ridge of log price on the description. Training scores use earlier blocks; the initial block remains missing. \\
+\bottomrule
+\end{tabular}
+\end{center}
+For the 12-month unit-price feature, fewer than 30 community/type sales falls back to the same type across the city, then the citywide median. This changes one price feature: community, type and attributes remain separate inputs. Same-pin comparables match coordinates rounded to six decimals and property type, close before the subject's listing, and exclude its listing ID. A lagged type index brings old comparable prices to the listing-month level; the eligible count describes support. With no comp, price is missing and count zero.
+
+\section{Models: one shared engine, two targets and different calibration}
+Both tracks use squared-error LightGBM with 700 trees, 127 leaves, learning rate 0.03, at least 20 rows per leaf, row/feature subsamples 0.8, L2 penalty 1, seed 0. We reused the earlier selected tree settings rather than reopening a large search after every feature change. Log targets emphasize relative price differences; squared log loss is not identical to the evaluated MdAPE. Our evidence concerns the complete pipeline, not a claim that LightGBM itself uniquely explains the gain.
+
+\subsection{List-aware: local discounts plus a forecast market factor}
+\[
+g_i=\log(Y_i/L_i),\qquad \widehat Y_i=L_i\exp\{F_{\rm LA}(x_i)\}.
+\]
+The ask is a multiplicative anchor; the tree learns the home's closing discount or premium. A predicted ratio of 0.96 turns a \$900,000 ask into \$864,000, while another home can receive a different ratio. Log ask remains a feature because discount patterns can depend on price level. Peer ask, local discounts, city lag and community jointly describe where this listing sits in the market.
+
+An OLS of log sold price on log ask and attributes leaves monthly mean residuals. SARIMAX with AR(1) and seasonal AR(12) forecasts their common movement; its output becomes \texttt{list\_month\_factor}. OLS and SARIMAX construct a feature, not separate dollar predictions averaged with the tree. A common market signal and a local discount can disagree; the tree learns their interaction. In the fixed-origin development experiment, OLS alone has 7.13\% MdAPE and OLS plus its residual forecast has 4.78\%, showing why market timing deserves attention. This is not an additive decomposition of V22's final improvement.
+
+\subsection{Off-market: direct price prediction and one recent-level correction}
+\[
+\widehat Y_i=\exp\{F_{\rm OM}(x_i)-\delta\},\qquad
+\delta=\operatorname{median}_{\rm prior\ 3\ months}(\log\widehat Y-\log Y).
+\]
+V9 predicts log sold price directly. Community and building prices inform the tree instead of forcing the estimate to be a particular anchor times a residual. The remarks ridge learns log-price information from TF--IDF text; masked numbers/community names and forward-block training scores limit memorization and self-prediction. The initial block has no text score.
+
+For calibration, an earlier tree excludes the latest three closed months and predicts them; their median log overprediction supplies $\delta$. The final tree is refit on all past sales and its output multiplied by $\exp(-\delta)$. A positive $\delta$ lowers all prices. This corrects a common recent level, not cheap-home overvaluation and luxury undervaluation simultaneously.
+
+\begin{figure}\centering
+\includegraphics[width=.92\linewidth,height=3.7cm,keepaspectratio]{reference/base_model_paths.pdf}
+\caption{The two scoring paths. Historical lookups, OLS/SARIMAX and ridge outputs are engineered inputs to one tree per track. Off-market alone has a post-tree level correction; the arrows summarize processing stages, not a requirement that OLS consume the lookup outputs.}
+\label{fig:paths}
+\end{figure}
+
+\section{Validation: use later evidence to challenge each design choice}
+For each sale month December 2025--May 2026, fit on sales closed before that month's first day, rebuild the entire feature/calibration pipeline, and predict that month's homes with outcomes hidden. Same-pin comps additionally predate listing. Pooled metrics weight homes equally; they are not averages of six monthly medians. MdAPE measures a typical absolute percentage miss, MAPE the average miss, and median signed error its direction (positive means high).
+
+The July--November 2025 inner screen informed initial windows, phrases and settings; subsequent developmental and walk-forward comparisons also informed final adoption. These six months are development evidence, not an untouched final test. Sale-month fitting does not prove accuracy at the original listing date for homes listed before the training cutoff, and monthly updates differ from freezing all history in May for a four-month forecast.
+
+\textbf{What validation changed.} The off-market inner screen preferred a 12-month unit-price window over 6, 24 and full history; the full-history anchor was stale and high. Full recent-level correction improved inner MdAPE from 8.31\% to 7.97\%. This was an inner comparison, not V9's walk-forward score. A two-type correction did not beat one common factor. For list-aware, a common post-tree adjustment won a frozen cut but performed poorly under walk-forward, so it was rejected. An earlier parameter retune also worsened next-window MdAPE (4.57\% versus 4.53\%). These comparisons support selective changes and stable settings, rather than presenting every additional parameter or calibration as an improvement. Appendix~\ref{app:selection} records the alternatives.
+
+\begin{figure}\centering
+\includegraphics[width=.95\linewidth,height=3.6cm,keepaspectratio]{validation_design_evidence.png}
+\caption{Three measured design choices with the same interpretation: improve the market information or its calibration before increasing model complexity. Each panel has its own protocol and specification; the differences are not additive contributions to final-model accuracy. The OLS comparison is an upstream timing experiment, not an ablation of the final V22 tree.}
+\label{fig:design-evidence}
+\end{figure}
+\textbf{Why these are different kinds of calibration.} The list-aware market factor describes a time-varying residual that the tree can use differently for different homes. The off-market correction is instead one common multiplier applied after the tree: if the median out-of-time predicted-to-realized ratio were 1.02, multiplying by about $1/1.02$ removes that level miss. Neither procedure reveals the unobserved renovation quality of an individual home. A stronger common correction can improve the aggregate while worsening a segment already biased in the opposite direction. This is why we validate signed errors and the month path, rather than selecting only the smallest pooled MdAPE.
+
+\section{Results: baseline gains exceed the final-version increments}
+\begin{table}\centering\small
+\begin{tabular}{llrrr}\toprule
+Track & Specification & MdAPE & MAPE & Median signed\\\midrule
+Off-market & Historical community/type anchor &15.33\%&20.32\%&+3.19\%\\
+& \textbf{Our off-market model (V9)} &\textbf{7.45\%}&\textbf{9.79\%}&$\mathbf{-0.37\%}$\\
+List-aware & Asking price &7.26\%&8.09\%&+5.68\%\\
+& \textbf{Our list-aware model (V22)} &\textbf{4.28\%}&\textbf{5.37\%}&\textbf{+0.90\%}\\\bottomrule
+\end{tabular}
+\caption{Monthly walk-forward results, 10,069 identical homes per track. Lower absolute errors are better. The tracks have different information sets; their error gap does not isolate an algorithm effect.}
+\end{table}
+Off-market MdAPE falls 7.88 percentage points (51\%) versus the anchor; list-aware falls 2.98 points (41\%) versus ask. Absolute error is lower on 73.9\% and 69.8\% of homes, respectively. The last changes are modest: V9 versus V7 is 7.45\% versus 7.50\%, with a February loss; V22 versus V21 is 4.28\% versus 4.36\%, improving all six months. Neither small difference establishes statistical superiority. Monthly bias reaches $-4.44\%$ off-market in February, while list-aware stays positive (+0.20\% to +1.33\%). Appendix~\ref{app:months} provides the full month path.
+
+\section{Where the model fails: calibration has limits}
+\begin{figure}\centering
+\includegraphics[width=.98\linewidth]{report_failure_compact.png}
+\caption{Walk-forward failure diagnostics from the V9/V22 notebook. A: price-decile median APE and interquartile bands. B: signed bias by decile. C: errors by major property types (co-op omitted here: only 48 homes). D: paired V22/ask outcomes at a declared 20\% APE threshold. Realized price groups are retrospective explanations, not pre-sale warning rules.}
+\label{fig:failure}
+\end{figure}
+Among 719 homes sold above \$2 million, V9 has 13.96\% MdAPE and $-9.27\%$ median bias. Overall 10.8\% of off-market errors exceed 20\%; P95 APE is 26.58\%. Detached-house MdAPE is 9.50\%, compared with 6.21\% for condo apartments. Sparse relevant comps and unobserved finish/condition are plausible explanations, not established causes. This fixed \$2 million group differs from a price decile.
+
+V22 repairs 256 asking-price errors above 20\% but introduces 47 new large misses; 75 remain large under both. Its overall large-error rate is 1.2\% and P95 APE 14.29\%. The cheapest decile is +2.78\% high despite only +0.90\% pooled bias. A single haircut is not a demonstrated solution. Fixed pre-sale warning rules flag 21.8\% of off-market homes but catch only 27.3\% of large misses; unflagged homes still have a 10.0\% large-error rate. Review flags prioritize work rather than certify safety.
+
+\subsection{When historical support weakens}
+The operational issue is not just whether a feature exists, but how specific and current its evidence is. In walk-forward V22, community-supported recent discounts have 3.90\% MdAPE and a 0.79\% large-error rate; type-fallback homes have 4.46\% and 1.40\%, respectively. The missing group contains only 32 homes, so its zero observed large misses is not evidence of safety. These observational groups can differ in property mix; the gap cannot be attributed solely to having a community feature. The frozen-origin missing rate of 45.84\% versus just 0.32\% under monthly updates also explains why a refreshable backtest may be more favorable than a stale deployment book.
+
+A review rule must use observable inputs: prior-year local comp counts, same-type size extremes, missing support, and unusual asking prices list-aware. Actual sold-price deciles cannot be such a rule. Our simple warnings miss most V9 large errors, so the practical recommendation is to show the supporting comp count and data age alongside the point estimate, and reserve manual review for consequential or poorly supported valuations. A small aggregate bias is insufficient assurance for either a luxury property or a thin local market.
+
+\section{Limitations and recommendations}
+Use the model matching the available information, inspect unusual high-consequence properties, and keep the transaction history current. In an earlier V9 May stress experiment, cutting history at January raises MdAPE from 7.39\% to 8.38\% and changes bias from +0.98\% to $-5.29\%$. Record information cutoffs and feature support, and monitor monthly and segment errors against both baselines. Synthetic data, a short inspected validation window, imperfect condition information, and no calibrated individual-home intervals limit the claims. An untouched frozen-horizon evaluation and uncertainty calibration are priorities. Outside data: none.
+
+\section*{Appendix: supporting specifications and validation evidence}
+\appendix
+\section{List-aware feature construction}
+\label{app:la}
+Peer ask for area $S$, ask $L$, community $c$, type $t$ and listing month $\tau$ is
+\[
+\mathrm{peer\ ask}_i=\frac{L_i/S_i}{m_{c,t}(\tau_i)},
+\]
+where $m$ is the historical median \emph{sold} \$/sqft before the listing month, with a type fallback below 30 sales. Recent discounts use sold/list ratios over three prior sale months, first community/type, then type, otherwise missing. The city lag is a prior-month median log gap. Community is also categorical; a single median does not encode every location interaction.
+
+The market factor starts with log-linear OLS. On the developmental estimation sample, log-ask elasticity is 0.894 and $R^2=0.966$. The monthly mean residual series is modeled by a constant, AR(1) and seasonal AR(12); the recorded estimation coefficients are $-0.0046$, 0.872 and 0.370. These are fitted historical coefficients, not constants held fixed across origins. A trend ADF test gave $p=0.0002$; no differencing was used. The forecast is a feature, not a compulsory dollar adjustment. Split-gain shares on the fixed-origin V22 fit are peer ask 21.64\%, community 18.60\%, log ask 9.57\%, city lag 9.37\%, recent discount 7.45\%, and month factor 6.32\%. Gain is an in-fit description, not a causal or independent contribution.
+
+\section{Off-market feature construction and calibration}
+\label{app:om}
+With prior-sale unit prices $p_j=Y_j/S_j$, the 12-month community/type median is preferred at 30 observations, otherwise type at 30, otherwise city. If a window is empty, use the same-length block ending at the cell's latest eligible sale; a remaining missing/nonpositive result falls back to the usable reference-sample median. Separate city three- and twelve-month medians describe short and slower levels. Community-level coverage is 76.47\% in the fixed-origin validation sample.
+
+A pin combines six-decimal coordinates and property type. Eligible comparable sales precede listing and exclude the subject's listing ID. For type $t$, a lagged three-month median of monthly median log unit prices forms an index $I_{t,m}$. Historical unit prices are divided by their index and brought to the subject month's index. Subject area times median adjusted unit price enters as a log-price feature, with an eligible-count feature. Coverage is 59.76\% fixed-origin. Same pin need not mean the same unit. Without a comp, the tree uses missing-value splits and other features.
+
+The remarks ridge uses TF--IDF unigrams/bigrams, sublinear term frequency, minimum document frequency 40, at most 3,000 terms and penalty 0.3. Numeric strings and community names are masked. Time-ordered block boundaries at 40/55/70/85/100\% ensure each scored training block uses earlier rows; the initial 40\% have missing scores. A validation home uses a text model fitted on the available past. Thirteen condition flags remain separate written patterns. The inner remarks-score gain was only 0.05 MdAPE points; fixed-origin split gain is 0.68\%. Historical comps, not text alone, drive this specification.
+
+The correction uses an earlier tree's median $\log\widehat Y-\log Y$ over the latest three closed months. Then refit the tree on all past sales and multiply by $\exp(-\delta)$. Full weight was selected before December. This differs from using a community anchor as the final price multiplier: it is one common recent-error factor. Opposite low/high-price biases remain unresolved.
+
+\section{Measured alternatives and validation decisions}
+\label{app:selection}
+\begin{table}\centering\small
+\begin{tabular}{p{4.2cm}p{4.5cm}p{7.6cm}}\toprule
+Track / decision & Evidence & Interpretation\\\midrule
+Off-market window & Inner MdAPE: 12m 15.33; 6m 16.19; 24m 15.70; all-history 16.42 & Twelve months balanced noise and staleness; all-history bias was +11.97\%. These are anchor-screen scores.\\
+Off-market recent correction & Inner no-shift 8.31 versus full-shift 7.97 & Retain full common correction; separate house/condo corrections did not improve the tested gap design (8.18 versus 8.17).\\
+Off-market direct target & Walk-forward V9 7.45 versus gap V7 7.50 & Small pooled advantage, five monthly wins; retain V7 as challenger.\\
+Off-market median loss & Walk-forward 7.53 & Squared-log-error specification remained better on this comparison.\\
+List-aware text & Developmental 4.85 versus 4.83 & Exclude text on the tested early design.\\
+List-aware post-tree correction & Frozen winner 4.40; a tested monthly correction had $-1.75\%$ bias & A frozen-cut win did not justify a persistent overlay.\\
+List-aware community & Walk-forward 4.28 versus V21 4.36 & Small improvement in all six months; retain category.\\
+List-aware coordinates / extra comps & Developmental 4.52--4.53 & Rotations, clusters and ten-nearest-sales features did not improve the tested design.\\\bottomrule
+\end{tabular}
+\caption{Evidence for feature and calibration choices. Comparisons span different stages and protocols; their gains must not be added together or described as a controlled decomposition of final-model accuracy.}
+\end{table}
+
+\section{Monthly walk-forward evidence}
+\label{app:months}
+\begin{table}\centering\small
+\begin{tabular}{lrrrrr}\toprule
+Month & Homes & V9 MdAPE & V9 signed & V22 MdAPE & V22 signed\\\midrule
+2025-12 &1238&7.42&+0.63&3.97&+1.31\\
+2026-01 &1058&7.27&$-2.50$&4.16&+1.33\\
+2026-02 &1442&8.17&$-4.44$&4.38&+0.20\\
+2026-03 &1816&7.10&$-1.15$&4.14&+0.46\\
+2026-04 &2224&7.44&+1.65&4.37&+1.31\\
+2026-05 &2291&7.39&+0.98&4.55&+0.92\\\midrule
+Pooled &10069&7.45&$-0.37$&4.28&+0.90\\\bottomrule
+\end{tabular}
+\caption{Monthly percentage errors. Pooled medians are calculated over homes, not over the monthly medians.}
+\end{table}
+\begin{figure}\centering
+\includegraphics[width=.49\linewidth]{reference/base_om_monthly.png}\hfill
+\includegraphics[width=.49\linewidth]{reference/base_la_monthly.png}
+\caption{Monthly model comparisons. Left: V9, historical anchor and gap challenger; right: V22, ask and V21. The relative baseline gains are much larger than the last version increments.}
+\end{figure}
+
+\section{Additional failure evidence: support and warnings}
+\label{app:risk}
+\begin{table}\centering\small
+\begin{tabular}{lrrrr}\toprule
+V22 recent-discount support & Homes & MdAPE & APE $>20\%$ & Mean APE reduction vs ask\\\midrule
+Community &3037&3.90\%&0.79\%&3.17 pp\\
+Type fallback &7000&4.46\%&1.40\%&2.52 pp\\
+Missing &32&5.30\%&0.00\%&3.91 pp\\\bottomrule
+\end{tabular}
+\caption{Actual historical lookup support rebuilt at each monthly origin. The 32-home missing group is too small to establish safety; support groups are observational, not randomized comparisons.}
+\end{table}
+Pre-sale flags use the earlier of listing-month start and model cutoff: fewer than 30 prior-year local comps, area outside same-type 1st--99th percentiles, unseen community, missing/invalid area or absent anchor, plus ask/anchor outside 0.7--1.3 list-aware only. Flags are a union, not fitted probability estimates. They flag 21.8\% of V9 homes and catch 27.3\% of its large misses; V22 flags 36.9\% and catches 50.8\%. Neither absence of a flag nor missingness handling certifies reliability. Community rankings in the notebook require 50 homes and remain exploratory.
+
+\begin{figure}\centering
+\includegraphics[width=\linewidth,height=3.4cm,keepaspectratio]{off_market_03_warning_effectiveness.png}
+\caption{Additional V9 warning diagnostics, not repeated in the main figure. Compare warning-present versus warning-absent error rates and the review/missed-error matrix; workload and recall must be read together.}
+\end{figure}
+The whole-month bootstrap resamples six sale months 400 times. Exploratory MdAPE ranges are 7.25--7.72\% for V9 and 4.12--4.40\% for V22. Only six blocks underpin these sensitivity ranges; they are not confidence about future regimes or per-home predictive coverage.
+
+\section{Fixed-origin calibration diagnostics}
+\label{app:fixed}
+The following figures use one fit through November 2025, not monthly updates. The current fixed-origin diagnostic snapshot has V9 MdAPE/MAPE/bias of 7.53/9.77/$-2.10$\%, versus 4.43/5.53/+1.49\% for V22. These are separate fixed-origin fits and are not evidence that the saved 7.45\% walk-forward result was independently refitted.
+\begin{figure}\centering
+\includegraphics[width=.35\linewidth]{om_calibration.png}\hfill
+\includegraphics[width=.35\linewidth]{calibration_ratio.png}
+\caption{Complementary fixed-origin calibration checks, shown once in the appendix. Left: V9 median prediction versus median sold price in predicted-price bins; right: V22 predicted versus realized close ratios. Proximity to the diagonal does not supply an individual-home interval.}
+\end{figure}
+
+\section{Reproducing the results}
+From the repository root, install \texttt{requirements.txt}, then run:
+\begin{quote}\ttfamily\small
+python run.py validate\quad;\quad python run.py report\\
+python run.py predict\quad;\quad python run.py check
+\end{quote}
+Run \path{notebooks/where_model_fails.ipynb} to audit the saved V9/V22 predictions and regenerate failure tables, historical support and figures under \path{outputs/where_model_fails/final_v9_v22/}. Default execution analyzes the existing export; \texttt{FORCE\_REBUILD=True} independently refits the monthly models. The manifest records prediction and analysis hashes. No optional unrun frozen-horizon score is reported.
+
+The three protocol-specific comparison panels are regenerated by \path{report/make_design_evidence.py}. Fixed-origin scripts \path{model-report/reproduce_v9_figures.py} and \path{model-report/reproduce_v22_figures.py} produce JSON diagnostics and images; their monthly charts use stored notebook outputs rather than new monthly fits.
+
+\textbf{References.} Friedman (2001), \emph{Greedy function approximation: a gradient boosting machine}; Ke et al. (2017), \emph{LightGBM}; Rosen (1974), \emph{Hedonic prices and implicit markets}. Outside data: none.
+\end{document}
