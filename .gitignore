@@ -1,9 +1,9 @@
 # Data and everything the scripts write
 data/
-outputs/
+# outputs/
 reports/
-figures/
-submissions/
+# figures/
+# submissions/
 
 # Python and notebook clutter
 __pycache__/
