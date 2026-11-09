@@ -25,13 +25,13 @@
 \begin{document}
 \begin{center}
 {\Large\bfseries SSU Data Dash 2026: Market Information Before Model Complexity}\\[3pt]
-\textit{Team name}\\[2pt]
+\textit{amysteriousdataset}\\[2pt]
 Amy Dang Phuong, Maira Masroor, Shannon Tanoto, Yiwei Jiang\\[2pt]
-\small Video: \url{https://youtu.be/YOUR-VIDEO}\quad
+\small Video: \url{https://www.youtube.com/watch?v=CB8fctAzhKk}\quad
 Code: \url{https://github.com/phuonganhdangamy/SSU-Data-Dash}
 \end{center}
 \section*{Summary}
-Our off-market (OM) model estimates value without an asking price; our list-aware (LA) model predicts closing price once listed. Their central design is \textbf{historical market features, time-aware calibration, and validation-led selection}, with a shared, frozen LightGBM configuration. Local comparable-sale levels and same-pin transactions establish off-market value; recent closing discounts and a forecast market factor help interpret asking prices. On 10,069 December 2025--May 2026 sales, monthly walk-forward MdAPE is \textbf{7.45\%} off-market and \textbf{4.28\%} list-aware, versus 15.33\% for a historical price anchor and 7.26\% for the ask. The residual risks are systematic luxury undervaluation, stale comparables, and individual corrections that make a baseline worse.
+Our off-market (OM) model estimates value without an asking price; our list-aware (LA) model predicts closing price once listed. Their central design is \textbf{historical market features, time-aware calibration, and validation-led selection}, with a shared, frozen LightGBM configuration. Local comparable-sale levels and same-pin transactions establish off-market value; recent closing discounts and a forecast market factor help interpret asking prices. On 10,069 December 2025--May 2026 sales, monthly walk-forward MdAPE is \textbf{7.42\%} off-market and \textbf{4.28\%} list-aware, versus 15.33\% for a historical price anchor and 7.26\% for the ask. The residual risks are systematic luxury undervaluation, stale comparables, and individual corrections that make a baseline worse.
 
 \section{Data and features: represent the market available at prediction}
 The book contains 150,000 synthetic Toronto sales closed January 2021--May 2026, six property types, five municipalities, and 145 communities. The deployment files contain 3,974 off-market and 4,064 list-aware homes. Synthetic names and coordinates do not justify real-map joins. Outside data: none.
@@ -115,13 +115,13 @@ The July--November 2025 inner screen informed initial windows, phrases and setti
 \begin{tabular}{llrrr}\toprule
 Track & Specification & MdAPE & MAPE & Median signed\\\midrule
 Off-market & Historical community/type anchor &15.33\%&20.32\%&+3.19\%\\
-& \textbf{Our OM model} &\textbf{7.45\%}&\textbf{9.79\%}&$\mathbf{-0.37\%}$\\
+& \textbf{Our OM model} &\textbf{7.42\%}&\textbf{9.79\%}&$\mathbf{-0.33\%}$\\
 List-aware & Asking price &7.26\%&8.09\%&+5.68\%\\
 & \textbf{Our LA model} &\textbf{4.28\%}&\textbf{5.37\%}&\textbf{+0.90\%}\\\bottomrule
 \end{tabular}
 \caption{Monthly walk-forward results, 10,069 identical homes per track. Lower absolute errors are better. The tracks have different information sets; their error gap does not isolate an algorithm effect.}
 \end{table}
-Off-market MdAPE falls 7.88 percentage points (51\%) versus the anchor; list-aware falls 2.98 points (41\%) versus ask. Absolute error is lower on 73.9\% and 69.8\% of homes, respectively. The last specification changes are modest: the OM model versus a gap-target challenger is 7.45\% versus 7.50\%, with a February loss; adding the community category moves the LA model from 4.36\% to 4.28\%, improving all six months. Neither small difference establishes statistical superiority. Monthly bias reaches $-4.44\%$ off-market in February, while list-aware stays positive (+0.20\% to +1.33\%). Appendix~\ref{app:months} provides the full month path.
+Off-market MdAPE falls 7.88 percentage points (52\%) versus the anchor; list-aware falls 2.98 points (41\%) versus ask. Absolute error is lower on 73.9\% and 69.8\% of homes, respectively. The last specification changes are modest: the OM model versus a gap-target challenger is 7.42\% versus 7.50\%, with a February loss; adding the community category moves the LA model from 4.36\% to 4.28\%, improving all six months. Neither small difference establishes statistical superiority. Monthly bias reaches $-4.44\%$ off-market in February, while list-aware stays positive (+0.20\% to +1.33\%). Appendix~\ref{app:months} provides the full month path.
 
 \section{Where the model fails: calibration has limits}
 \begin{figure}\centering
@@ -170,7 +170,7 @@ The correction uses an earlier tree's median $\log\widehat Y-\log Y$ over the la
 Track / decision & Evidence & Interpretation\\\midrule
 Off-market window & Inner MdAPE: 12m 15.33; 6m 16.19; 24m 15.70; all-history 16.42 & Twelve months balanced noise and staleness; all-history bias was +11.97\%. These are anchor-screen scores.\\
 Off-market recent correction & Inner no-shift 8.31 versus full-shift 7.97 & Retain full common correction; separate house/condo corrections did not improve the tested gap design (8.18 versus 8.17).\\
-Off-market direct target & Walk-forward OM 7.45 versus gap-target 7.50 & Small pooled advantage, five monthly wins; the gap specification stays a challenger.\\
+Off-market direct target & Walk-forward OM 7.42 versus gap-target 7.50 & Small pooled advantage, five monthly wins; the gap specification stays a challenger.\\
 Off-market median loss & Walk-forward 7.53 & Squared-log-error specification remained better on this comparison.\\
 List-aware text & Developmental 4.85 versus 4.83 & Exclude text on the tested early design.\\
 List-aware post-tree correction & Frozen winner 4.40; a tested monthly correction had $-1.75\%$ bias & A frozen-cut win did not justify a persistent overlay.\\
@@ -191,7 +191,7 @@ Month & Homes & OM MdAPE & OM signed & LA MdAPE & LA signed\\\midrule
 2026-03 &1816&7.10&$-1.15$&4.14&+0.46\\
 2026-04 &2224&7.44&+1.65&4.37&+1.31\\
 2026-05 &2291&7.39&+0.98&4.55&+0.92\\\midrule
-Pooled &10069&7.45&$-0.37$&4.28&+0.90\\\bottomrule
+Pooled &10069&7.42&$-0.33$&4.28&+0.90\\\bottomrule
 \end{tabular}
 \caption{Monthly percentage errors. Pooled medians are calculated over homes, not over the monthly medians.}
 \end{table}
@@ -222,7 +222,7 @@ The whole-month bootstrap resamples six sale months 400 times. Exploratory MdAPE
 
 \section{Fixed-origin calibration diagnostics}
 \label{app:fixed}
-The following figures use one fit through November 2025, not monthly updates. The current fixed-origin diagnostic snapshot has OM MdAPE/MAPE/bias of 7.53/9.77/$-2.10$\%, versus 4.43/5.53/+1.49\% for the LA model. These are separate fixed-origin fits and are not evidence that the saved 7.45\% walk-forward result was independently refitted.
+The following figures use one fit through November 2025, not monthly updates. The current fixed-origin diagnostic snapshot has OM MdAPE/MAPE/bias of 7.53/9.77/$-2.10$\%, versus 4.43/5.53/+1.49\% for the LA model. These are separate fixed-origin fits and are not evidence that the saved 7.42\% walk-forward result was independently refitted.
 \begin{figure}\centering
 \includegraphics[width=.35\linewidth]{om_calibration.png}\hfill
 \includegraphics[width=.35\linewidth]{calibration_ratio.png}
